@@ -5,13 +5,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller">
    <children>
       <ImageView fitHeight="348.0" fitWidth="471.0" layoutX="2.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@hqdefault.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="198.0" layoutY="130.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #808080; -fx-background-radius: 200;" text="PLAY" textFill="WHITE" />
+      <Button fx:id="PlayButton" layoutX="198.0" layoutY="130.0" mnemonicParsing="false" onAction="#Click" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #808080; -fx-background-radius: 200;" text="PLAY" textFill="WHITE" />
    </children>
 </AnchorPane>
