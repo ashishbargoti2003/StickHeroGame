@@ -22,6 +22,7 @@ public class HomePage extends Application implements HomePageInterface{
         stage.setTitle("Stick Hero");
         stage.setScene(scene);
         stage.show();
+        
     }
 
     public void gameControl() {  }
