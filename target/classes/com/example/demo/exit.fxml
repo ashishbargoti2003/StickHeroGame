@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="523.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" layoutX="102.0" layoutY="35.0" prefHeight="51.0" prefWidth="319.0" text="Game Ends!">
@@ -13,6 +12,6 @@
             <Font size="29.0" />
          </font>
       </Label>
-      <Button layoutX="170.0" layoutY="181.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="183.0" text="Leave" />
+      <Button layoutX="170.0" layoutY="181.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="183.0" style="-fx-background-color: #808080; -fx-background-radius: 200;" text="Leave" />
    </children>
 </AnchorPane>
