@@ -17,7 +17,7 @@ public class HomePage extends Application implements HomePageInterface{
 //     Stage stage2= new Stage(); that how we create a stage
 
 //        FXMLLoader fxmlLoader = new FXMLLoader(HomePage.class.getResource("hello-view.fxml"));
-        Parent root= FXMLLoader.load(getClass().getResource("exit.fxml"));
+        Parent root= FXMLLoader.load(getClass().getResource("game.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Stick Hero");
         stage.setScene(scene);
