@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-//import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Node;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Node;
+
 import javafx.scene.Node;
 
 
@@ -37,11 +38,15 @@ public class Controller {
     private Label welcomeText;
 
     @FXML
-    void onHelloButtonClick(ActionEvent event) {
+    void onHelloButtonClick(MouseEvent event) {
         System.out.println("clicked");
 
     }
+    @FXML
+    void elongateStick(MouseEvent event) {
+        System.out.println("stretching stick length");
 
+    }
     @FXML
     void printf(MouseEvent event) {
         System.out.println("this is clicked now");
