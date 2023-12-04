@@ -100,6 +100,7 @@ public class Controller implements Initializable{
         if (elongateTimeline != null) {
             elongateTimeline.stop();
             rotateStick();
+            handleButtonAction();
         }
     }
 
@@ -263,7 +264,7 @@ public class Controller implements Initializable{
     int cnt = 0;
 
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private void handleButtonAction() {
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.millis(1000));
         transition.setNode(TheHero);
