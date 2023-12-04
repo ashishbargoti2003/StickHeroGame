@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +17,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.animation.RotateTransition;
+import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +37,12 @@ import javafx.util.Duration;
 
 
 public class Controller implements Initializable{
+    @FXML
+    public Rectangle stick2;
+    @FXML
+    private Rectangle Stick;
+
+
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -58,11 +73,68 @@ public class Controller implements Initializable{
         System.out.println("clicked");
 
     }
+    boolean isMousePressed = true;
+
+
+    private Timeline elongateTimeline;
+
     @FXML
     void elongateStick(MouseEvent event) {
         System.out.println("stretching stick length");
 
+        elongateTimeline = new Timeline(
+                new KeyFrame(Duration.millis(500), e -> {
+                    increaseSize();
+                })
+        );
+
+        elongateTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        elongateTimeline.play();
     }
+
+    @FXML
+    void stopElongation(MouseEvent event) {
+        System.out.println("Stopped stretching stick length");
+
+        if (elongateTimeline != null) {
+            elongateTimeline.stop();
+            rotateStick();
+        }
+    }
+
+
+
+
+
+//    @FXML
+//    void elongateStick(MouseEvent event) {
+//
+//        System.out.println("stretching stick length");
+//        // Flag to control the while loop
+//        boolean isMousePressed = true;
+//
+//        // Run the loop while the mouse button is pressed
+//        while (isMousePressed) {
+//            System.out.println("printing");
+//
+//            // Check if the primary mouse button is not pressed
+//            if (!event.isPrimaryButtonDown()) {
+//                isMousePressed = false; // Stop the loop when the mouse button is released
+//            }
+//        }
+//
+//        System.out.println("Stopped stretching stick length");
+//
+//    }
+//    @FXML
+//    void stopElongation(MouseEvent event) {
+//        isMousePressed=false;
+//
+//        System.out.println("stopped stretching stick length");
+//
+//
+//    }
     @FXML
     private Button PauseButton;
 
@@ -75,6 +147,89 @@ public class Controller implements Initializable{
 
     }
 
+
+    @FXML
+    private void increaseSize() {
+
+        double originalY = Stick.getY();
+        double originalHeight = Stick.getHeight();
+        double newHeight = originalHeight + 15; // You can adjust the value as needed
+
+        // Adjust the position of the rectangle to keep the base fixed
+        Stick.setY(originalY - (newHeight - originalHeight));
+
+        // Set the new height
+        Stick.setHeight(newHeight);
+
+
+
+    }
+
+    @FXML
+    private void decreaseSize() {
+        // Example: Decrease width and height
+        double newWidth = Stick.getWidth() - 10;
+        double newHeight = Stick.getHeight() - 10;
+
+        Stick.setWidth(newWidth);
+        Stick.setHeight(newHeight);
+    }
+
+
+//    @FXML
+//    public void rotateStick3() {
+//        // Calculate the base of the stick
+//        double baseX = Stick.getX() + Stick.getWidth() / 2;
+//        double baseY = Stick.getY() + Stick.getHeight();
+//
+//        // Create a RotateTransition for the rotation animation
+//        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), Stick);
+//
+//        // Set the axis of rotation (base of the stick)
+//        rotateTransition.setPivotX(baseX);
+//        rotateTransition.setPivotY(baseY);
+//
+//        // Set the target angle (90 degrees clockwise)
+//        rotateTransition.setByAngle(90);
+//
+//        // Play the rotation animation
+//        rotateTransition.play();
+//    }
+//}
+    private Rotate rotateTransform;
+    @FXML
+    public void rotateStick(){
+        Timeline rotationTimeline;
+        // Calculate the base of the stick
+        double baseX = Stick.getX() + Stick.getWidth() / 2;
+        double baseY = Stick.getY() + Stick.getHeight();
+
+        // Create a Rotate transform
+        rotateTransform = new Rotate(0, baseX, baseY);
+
+        // Apply the Rotate transform to the Stick
+        Stick.getTransforms().add(rotateTransform);
+
+        // Rotate the Stick by 90 degrees clockwise around the base
+        rotateTransform.setAngle(90);
+
+        // Adjust layout parameters if needed
+        Stick.setX(baseX - Stick.getWidth() / 2);
+        Stick.setY(baseY - Stick.getHeight());
+        // Create a Timeline for the rotation animation
+
+    }
+
+
+    @FXML
+    public void rotateStick2(){
+        double baseX = Stick.getX() + Stick.getWidth() / 2;
+        double baseY = Stick.getY() + Stick.getHeight();
+        RotateTransition rotateTransition = new RotateTransition(Duration.millis(500), Stick);
+        rotateTransition.setByAngle(90);
+
+        rotateTransition.play();
+    }
     @FXML
     private Label LabelText;
 
