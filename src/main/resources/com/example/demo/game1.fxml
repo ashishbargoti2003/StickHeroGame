@@ -27,7 +27,7 @@
             <Image url="@images/beta.png" />
          </image>
       </ImageView>
-      <Label fx:id="LabelText" alignment="CENTER" layoutX="134.0" layoutY="20.0" onMouseClicked="#RemoveLabel" prefHeight="114.0" prefWidth="214.0" text="Click to extend the stick">
+      <Label fx:id="LabelText" alignment="CENTER" layoutX="100.0" layoutY="14.0" onMouseClicked="#RemoveLabel" opacity="0.35" prefHeight="114.0" prefWidth="281.0" text="Press and hold to extend the stick">
          <font>
             <Font size="17.0" />
          </font>

@@ -243,7 +243,10 @@ public class Controller implements Initializable{
     @FXML
     int MoveHero() {
         Stick LengthtoMove = new Stick();
-        LengthtoMove.setLengthofStick(300);
+        LengthtoMove.setLengthofStick((int)Stick.getHeight());
+//        will make sure user traverses only till stick length
+//        need to make sure
+//        if distance between pillars!=stick.length then hero falls
         return LengthtoMove.getLengthofStick();
     }
 
