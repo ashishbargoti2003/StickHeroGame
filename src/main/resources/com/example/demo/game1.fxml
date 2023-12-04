@@ -37,7 +37,5 @@
             <Image url="@images/beta.png" />
          </image>
       </ImageView>
-      <Button fx:id="myButton" layoutX="224.0" layoutY="174.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="306.0" layoutY="174.0" mnemonicParsing="false" onAction="#increaseSize" text="Stick" />
    </children>
 </AnchorPane>
