@@ -15,7 +15,7 @@
             <Image url="@back4.png" />
          </image>
       </ImageView>
-      <Rectangle fx:id="Stick" arcHeight="5.0" arcWidth="5.0" fill="#000c16" height="15.0" layoutX="78.0" layoutY="217.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
+      <Rectangle fx:id="StickI" arcHeight="5.0" arcWidth="5.0" fill="#000c16" height="15.0" layoutX="78.0" layoutY="217.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
       <Button fx:id="PauseButton" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" onAction="#Pause" prefHeight="39.0" prefWidth="61.0" text="Pause" />
       <ImageView fx:id="TheHero" fitHeight="39.0" fitWidth="34.0" layoutX="45.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -27,7 +27,7 @@
             <Image url="@images/beta.png" />
          </image>
       </ImageView>
-      <Label fx:id="LabelText" alignment="CENTER" layoutX="134.0" layoutY="20.0" onMouseClicked="#RemoveLabel" prefHeight="114.0" prefWidth="214.0" text="Click to extend the stick">
+      <Label fx:id="LabelText" alignment="CENTER" layoutX="100.0" layoutY="14.0" onMouseClicked="#RemoveLabel" opacity="0.35" prefHeight="114.0" prefWidth="281.0" text="Press and hold to extend the stick">
          <font>
             <Font size="17.0" />
          </font>

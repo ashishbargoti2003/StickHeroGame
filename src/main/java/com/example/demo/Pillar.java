@@ -1,36 +1,36 @@
 package com.example.demo;
 
 public class Pillar {
-    private int  width;
+    private double  width;
 
-    private int distance;
+    private double distance;
 
-    public Pillar(int width, int distance) {
+    public Pillar(double width, double distance) {
         this.width = width;
         this.distance = distance;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
-    public void increaseWidth(int n){
+    public void increaseWidth(double n){
 
     }
 
-    public Pillar(int width) {
+    public Pillar(double width) {
         this.width = width;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(double width) {
         this.width = width;
     }
 

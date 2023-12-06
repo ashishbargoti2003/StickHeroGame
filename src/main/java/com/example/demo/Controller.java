@@ -35,13 +35,17 @@ import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
+import static java.lang.Thread.sleep;
+
 
 public class Controller implements Initializable{
     @FXML
     public Rectangle stick2;
-    @FXML
-    private Rectangle Stick;
 
+    @FXML
+    private Rectangle StickI; // This is the main stick
+
+    final double Original_heightofStick = 10; // This is the original Height of the Stick
 
     private Stage stage;
     private Scene scene;
@@ -50,23 +54,27 @@ public class Controller implements Initializable{
     @FXML
     private Button myButton;
 
+    private String GameScreen = "game1.fxml";
+    private String ScorecardScreen = "scorecard.fxml";
+    private String EntryScreen = "game.fxml";
+    private String ExitScreen = "exit.fxml";
+
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
-     root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
+
+        root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
 
     }
-    @FXML
-    private ImageView TheHero;
-
-
-
 
     @FXML
-    private Label welcomeText;
+    private ImageView TheHero; // This is the Hero character
+
+    @FXML
+    private Label welcomeText; // This is just a welcome label
 
     @FXML
     void onHelloButtonClick(MouseEvent event) {
@@ -74,7 +82,6 @@ public class Controller implements Initializable{
 
     }
     boolean isMousePressed = true;
-
 
     private Timeline elongateTimeline;
 
@@ -94,50 +101,25 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    void stopElongation(MouseEvent event) {
+    void stopElongation(MouseEvent event) throws InterruptedException, IOException {
         System.out.println("Stopped stretching stick length");
 
         if (elongateTimeline != null) {
             elongateTimeline.stop();
             rotateStick();
-            handleButtonAction();
+            // Initially just making for constant distance
+            // checking if height of stick less than what is required, then hero falls
+            if(StickI.getHeight() < 280) {
+                HeroFalls();
+                // Here after this, Switch scene to the revival or scorecard screen...
+            }
+            else
+                handleButtonAction();
         }
     }
 
-
-
-
-
-//    @FXML
-//    void elongateStick(MouseEvent event) {
-//
-//        System.out.println("stretching stick length");
-//        // Flag to control the while loop
-//        boolean isMousePressed = true;
-//
-//        // Run the loop while the mouse button is pressed
-//        while (isMousePressed) {
-//            System.out.println("printing");
-//
-//            // Check if the primary mouse button is not pressed
-//            if (!event.isPrimaryButtonDown()) {
-//                isMousePressed = false; // Stop the loop when the mouse button is released
-//            }
-//        }
-//
-//        System.out.println("Stopped stretching stick length");
-//
-//    }
-//    @FXML
-//    void stopElongation(MouseEvent event) {
-//        isMousePressed=false;
-//
-//        System.out.println("stopped stretching stick length");
-//
-//
-//    }
     @FXML
-    private Button PauseButton;
+    private Button PauseButton; // THis is for the pause button
 
     @FXML
     void Pause(ActionEvent e) { System.out.println("pause!!!"); }
@@ -152,85 +134,60 @@ public class Controller implements Initializable{
     @FXML
     private void increaseSize() {
 
-        double originalY = Stick.getY();
-        double originalHeight = Stick.getHeight();
-        double newHeight = originalHeight + 15; // You can adjust the value as needed
+        double originalY = StickI.getY();
+        double originalHeight = StickI.getHeight();
+        double newHeight = originalHeight + 70; // You can adjust the value as needed
 
         // Adjust the position of the rectangle to keep the base fixed
-        Stick.setY(originalY - (newHeight - originalHeight));
+        StickI.setY(originalY - (newHeight - originalHeight));
 
         // Set the new height
-        Stick.setHeight(newHeight);
-
-
-
+        StickI.setHeight(newHeight);
     }
 
     @FXML
     private void decreaseSize() {
-        // Example: Decrease width and height
-        double newWidth = Stick.getWidth() - 10;
-        double newHeight = Stick.getHeight() - 10;
-
-        Stick.setWidth(newWidth);
-        Stick.setHeight(newHeight);
+        // Example: Decrease height
+        // I have removed width part from here as there is not need to increase and decrease the
+        // width of the stick
+        double newHeight = StickI.getHeight() - 10;
+        StickI.setHeight(newHeight);
     }
 
-
-//    @FXML
-//    public void rotateStick3() {
-//        // Calculate the base of the stick
-//        double baseX = Stick.getX() + Stick.getWidth() / 2;
-//        double baseY = Stick.getY() + Stick.getHeight();
-//
-//        // Create a RotateTransition for the rotation animation
-//        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), Stick);
-//
-//        // Set the axis of rotation (base of the stick)
-//        rotateTransition.setPivotX(baseX);
-//        rotateTransition.setPivotY(baseY);
-//
-//        // Set the target angle (90 degrees clockwise)
-//        rotateTransition.setByAngle(90);
-//
-//        // Play the rotation animation
-//        rotateTransition.play();
-//    }
-//}
     private Rotate rotateTransform;
     @FXML
     public void rotateStick(){
         Timeline rotationTimeline;
         // Calculate the base of the stick
-        double baseX = Stick.getX() + Stick.getWidth() / 2;
-        double baseY = Stick.getY() + Stick.getHeight();
+        double baseX = StickI.getX() + StickI.getWidth() / 2;
+        double baseY = StickI.getY() + StickI.getHeight();
 
         // Create a Rotate transform
         rotateTransform = new Rotate(0, baseX, baseY);
 
         // Apply the Rotate transform to the Stick
-        Stick.getTransforms().add(rotateTransform);
+        StickI.getTransforms().add(rotateTransform);
 
         // Rotate the Stick by 90 degrees clockwise around the base
         rotateTransform.setAngle(90);
 
         // Adjust layout parameters if needed
-        Stick.setX(baseX - Stick.getWidth() / 2);
-        Stick.setY(baseY - Stick.getHeight());
+        StickI.setX(baseX - StickI.getWidth() / 2);
+        StickI.setY(baseY - StickI.getHeight());
         // Create a Timeline for the rotation animation
 
     }
 
-
     @FXML
     public void rotateStick2(){
-        double baseX = Stick.getX() + Stick.getWidth() / 2;
-        double baseY = Stick.getY() + Stick.getHeight();
-        RotateTransition rotateTransition = new RotateTransition(Duration.millis(500), Stick);
+        double baseX = StickI.getX() + StickI.getWidth() / 2;
+        double baseY = StickI.getY() + StickI.getHeight();
+        RotateTransition rotateTransition = new RotateTransition(Duration.millis(500), StickI);
         rotateTransition.setByAngle(90);
 
         rotateTransition.play();
     }
+
     @FXML
     private Label LabelText;
 
@@ -243,7 +200,7 @@ public class Controller implements Initializable{
     @FXML
     int MoveHero() {
         Stick LengthtoMove = new Stick();
-        LengthtoMove.setLengthofStick((int)Stick.getHeight());
+        LengthtoMove.setLengthofStick((int)StickI.getHeight());
 //        will make sure user traverses only till stick length
 //        need to make sure
 //        if distance between pillars!=stick.length then hero falls
@@ -261,90 +218,150 @@ public class Controller implements Initializable{
     @FXML
     private ImageView Pillar2;
 
-    @FXML
-    private Rectangle StickI;
 
-    int cnt = 0;
+
+    public void InitializePillars() {
+        System.out.printf("value is %f\n, %f\n", Pillar1.getFitWidth(), Pillar2.getFitWidth());
+    }
+
+
+    int Counter = 0;
+
+    @FXML
+    private void HeroFalls() {
+        // This function is for moving the hero uptil the end of stick
+        // And when he reaches there he falls...
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.millis(1000));
+        transition.setNode(TheHero);
+        System.out.println(MoveHero());
+        transition.setByX(StickI.getHeight());
+        transition.setAutoReverse(true);
+        transition.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                TranslateTransition HeroFalling = new TranslateTransition();
+                HeroFalling.setDuration(Duration.millis(1000));
+                HeroFalling.setNode(TheHero);
+                HeroFalling.setByY(500);
+
+                HeroFalling.play();
+            }
+        });
+        transition.play();
+    }
 
     @FXML
     private void handleButtonAction() {
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.millis(1000));
         transition.setNode(TheHero);
+        System.out.println(MoveHero());
         transition.setByX(MoveHero());
         transition.setAutoReverse(true);
-//        transition.setCycleCount(1);
-        if(cnt == 0) {
-            cnt = 1;
+        if(Counter == 0) {
+            Counter = 1;
             transition.setOnFinished(new EventHandler<ActionEvent>() {
+
                 @Override
                 public void handle(ActionEvent event) {
                     Pillar1.setVisible(false);
-                    StickI.setVisible(false);
-                    TranslateTransition newTransition1 = new TranslateTransition();
-                    newTransition1.setDuration(Duration.millis(1000));
-                    newTransition1.setNode(TheHero);
-                    newTransition1.setByX(-1 * MoveHero());
+                    StickI.setVisible(false); // This is the user stick
 
+                    // This part is for moving the Hero
+                    TranslateTransition MovingHero = new TranslateTransition();
+                    MovingHero.setDuration(Duration.millis(1000));
+                    MovingHero.setNode(TheHero);
+                    MovingHero.setByX(-1 * MoveHero());
 
-                    TranslateTransition newTransition2 = new TranslateTransition();
-                    newTransition2.setDuration(Duration.millis(1000));
-                    newTransition2.setNode(Pillar2);
-                    newTransition2.setByX(-1 * MoveHero());
+                    // THis part is for moving pillar2
+                    TranslateTransition MovingPillar2 = new TranslateTransition();
+                    MovingPillar2.setDuration(Duration.millis(1000));
+                    MovingPillar2.setNode(Pillar2);
+                    MovingPillar2.setByX(-1 * MoveHero());
 
-                    TranslateTransition newTransition3 = new TranslateTransition();
-                    newTransition3.setDuration(Duration.millis(1000));
-                    newTransition3.setNode(Pillar1);
-                    newTransition3.setByX(MoveHero());
+                    // This part is for moving Stick
+                    TranslateTransition MovingStick = new TranslateTransition();
+                    MovingStick.setDuration(Duration.millis(1000));
+                    MovingStick.setNode(StickI);
+                    MovingStick.setByX(-1 * MoveHero());
 
-                    newTransition2.play();
-                    newTransition1.play();
-                    newTransition3.play();
-                    newTransition3.setOnFinished(new EventHandler<ActionEvent>() {
+                    // This part is for moving Pillar1
+                    TranslateTransition MovingPillar1 = new TranslateTransition();
+                    MovingPillar1.setDuration(Duration.millis(1000));
+                    MovingPillar1.setNode(Pillar1);
+                    MovingPillar1.setByX(MoveHero());
+
+                    MovingPillar2.play();
+                    MovingHero.play();
+                    MovingPillar1.play();
+                    MovingStick.play();
+
+                    MovingPillar1.setOnFinished(new EventHandler<ActionEvent>() {
+                        // when Pillar1 is at its place ...
                         @Override
                         public void handle(ActionEvent actionEvent) {
                             Pillar1.setVisible(true);
+                            StickI.setHeight(Original_heightofStick); // Redo the height of stick
+                            // Rotating the stick 270Deg as initial condition
+                            rotateStick();
+                            rotateStick();
+                            rotateStick();
+                            StickI.setVisible(true);
                         }
                     });
-                    //                Pillar1.setVisible(true);
                 }
             });
-
             transition.play();
         }
         else {
-            cnt = 0;
+            Counter = 0;
             transition.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     Pillar2.setVisible(false);
                     StickI.setVisible(false);
-                    TranslateTransition newTransition1 = new TranslateTransition();
-                    newTransition1.setDuration(Duration.millis(1000));
-                    newTransition1.setNode(TheHero);
-                    newTransition1.setByX(-1 * MoveHero());
 
+                    // For moving hero
+                    TranslateTransition MovingHero = new TranslateTransition();
+                    MovingHero.setDuration(Duration.millis(1000));
+                    MovingHero.setNode(TheHero);
+                    MovingHero.setByX(-1 * MoveHero());
 
-                    TranslateTransition newTransition2 = new TranslateTransition();
-                    newTransition2.setDuration(Duration.millis(1000));
-                    newTransition2.setNode(Pillar1);
-                    newTransition2.setByX(-1 * MoveHero());
+                    // for moving pillar1
+                    TranslateTransition MovingPillar1 = new TranslateTransition();
+                    MovingPillar1.setDuration(Duration.millis(1000));
+                    MovingPillar1.setNode(Pillar1);
+                    MovingPillar1.setByX(-1 * MoveHero());
 
-                    TranslateTransition newTransition3 = new TranslateTransition();
-                    newTransition3.setDuration(Duration.millis(1000));
-                    newTransition3.setNode(Pillar2);
-                    newTransition3.setByX(MoveHero());
+                    // for moving pillar2
+                    TranslateTransition MovingPillar2 = new TranslateTransition();
+                    MovingPillar2.setDuration(Duration.millis(1000));
+                    MovingPillar2.setNode(Pillar2);
+                    MovingPillar2.setByX(MoveHero());
 
-                    newTransition2.play();
-                    newTransition1.play();
-                    newTransition3.play();
-                    newTransition3.setOnFinished(new EventHandler<ActionEvent>() {
+                    // for moving stick
+                    TranslateTransition MovingStick = new TranslateTransition();
+                    MovingStick.setDuration(Duration.millis(1000));
+                    MovingStick.setNode(StickI);
+                    MovingStick.setByX(-1 * MoveHero());
+
+                    MovingPillar1.play();
+                    MovingHero.play();
+                    MovingPillar2.play();
+                    MovingStick.play();
+                    MovingPillar2.setOnFinished(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
                             Pillar2.setVisible(true);
+
+                            StickI.setHeight(Original_heightofStick);
+                            rotateStick();
+                            rotateStick();
+                            rotateStick();
+                            StickI.setVisible(true);
                         }
                     });
-                    //                Pillar1.setVisible(true);
                 }
             });
 
@@ -352,23 +369,3 @@ public class Controller implements Initializable{
         }
     }
 }
-
-
-
-
-
-
-//package com.example.demo;
-//
-//import javafx.fxml.FXML;
-//import javafx.scene.control.Label;
-//
-//public class HelloController {
-//    @FXML
-//    private Label welcomeText;
-//
-//    @FXML
-//    protected void onHelloButtonClick() {
-//        welcomeText.setText("Welcome to JavaFX Application!");
-//    }
-//}
