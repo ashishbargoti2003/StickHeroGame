@@ -24,28 +24,18 @@ public class HomePage extends Application implements HomePageInterface{
 
         stage.show();
     }
-    public void gameControl(){
-
-    }
+    public void gameControl() { }
     @Override
-    public void play(){
-
-    }
+    public void play(){}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void viewScore() {
-
-    }
+    public void viewScore() {}
 
     @Override
-    public void exit() {
-
-    }
+    public void exit() {}
 
     public static void main(String[] args) {
         launch(args);

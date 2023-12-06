@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -9,35 +8,47 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.animation.RotateTransition;
-import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 //import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Node;
 
-import javafx.scene.Node;
-import javafx.util.Duration;
-
 import static java.lang.Thread.sleep;
 
 
+/*
+* New Things Done -
+* I have added falling of hero when distance of stick less than distance between pillar using
+* function HeroFalls but now this is just checking for constant distance
+*
+* I have also removed the error when coming while extending stick
+*
+* Also added scorecard scene on which hitting play will take you to again the game scene
+*
+* */
+
+/*
+* Things remaining
+* Check the distance of the pillar and make the Herofalls function in accordance if it, now it is
+* just checking the constant distance.
+*
+*Score is not updated and not stored best score also
+*
+ */
 public class Controller implements Initializable{
     @FXML
     public Rectangle stick2;
@@ -59,6 +70,7 @@ public class Controller implements Initializable{
     private String EntryScreen = "game.fxml";
     private String ExitScreen = "exit.fxml";
 
+
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
 
@@ -71,6 +83,16 @@ public class Controller implements Initializable{
     }
 
     @FXML
+    public void SwitchToScoreCard() throws IOException {
+        Parent menu_parent = FXMLLoader.load(getClass().getResource("scorecard.fxml"));
+        Scene SceneMenu = new Scene(menu_parent);
+        Stage stage = (Stage) TheHero.getParent().getScene().getWindow();
+        stage.setScene(SceneMenu);
+        stage.show();
+    }
+
+
+    @FXML
     private ImageView TheHero; // This is the Hero character
 
     @FXML
@@ -81,6 +103,9 @@ public class Controller implements Initializable{
         System.out.println("clicked");
 
     }
+
+//    Score variable for the initail hero
+    ScoreCard score = new ScoreCard(0);
     boolean isMousePressed = true;
 
     private Timeline elongateTimeline;
@@ -100,6 +125,7 @@ public class Controller implements Initializable{
         elongateTimeline.play();
     }
 
+
     @FXML
     void stopElongation(MouseEvent event) throws InterruptedException, IOException {
         System.out.println("Stopped stretching stick length");
@@ -111,10 +137,15 @@ public class Controller implements Initializable{
             // checking if height of stick less than what is required, then hero falls
             if(StickI.getHeight() < 280) {
                 HeroFalls();
+                // Set Best score accordingly
                 // Here after this, Switch scene to the revival or scorecard screen...
             }
-            else
+            else{
+                // if this happens then calculating  the incrementing score of the player
+                score.setCurrentScore(score.getCurrentScore() + 10);
                 handleButtonAction();
+            }
+
         }
     }
 
@@ -127,7 +158,6 @@ public class Controller implements Initializable{
     @FXML
     void printf(MouseEvent event) {
         System.out.println("this is clicked now");
-
     }
 
 
@@ -153,6 +183,12 @@ public class Controller implements Initializable{
         double newHeight = StickI.getHeight() - 10;
         StickI.setHeight(newHeight);
     }
+
+    @FXML
+    private TextField DisplayScore;
+
+    @FXML
+    private Button PlayAgain;
 
     private Rotate rotateTransform;
     @FXML
@@ -219,7 +255,6 @@ public class Controller implements Initializable{
     private ImageView Pillar2;
 
 
-
     public void InitializePillars() {
         System.out.printf("value is %f\n, %f\n", Pillar1.getFitWidth(), Pillar2.getFitWidth());
     }
@@ -244,7 +279,21 @@ public class Controller implements Initializable{
                 HeroFalling.setDuration(Duration.millis(1000));
                 HeroFalling.setNode(TheHero);
                 HeroFalling.setByY(500);
+                HeroFalling.setOnFinished(new EventHandler<ActionEvent>() {
 
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        try {
+//                            DisplayScore.setText("" + score.getCurrentScore());
+                            SwitchToScoreCard();
+
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+
+                });
                 HeroFalling.play();
             }
         });
