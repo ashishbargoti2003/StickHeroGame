@@ -23,7 +23,10 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 //import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Node;
 
@@ -75,6 +78,7 @@ public class Controller implements Initializable{
 
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
+        music();
 
         root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -154,6 +158,18 @@ public class Controller implements Initializable{
             }
 
         }
+    }
+
+
+
+
+    MediaPlayer mediaPlayer;
+    public void music() {
+        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
+
     }
 
     @FXML
