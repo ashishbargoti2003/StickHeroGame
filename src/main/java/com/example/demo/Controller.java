@@ -103,6 +103,7 @@ public class Controller implements Initializable{
 
 
 
+
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
         //music();
@@ -113,13 +114,29 @@ public class Controller implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    public void callRevival() throws IOException {
+        //music();
+
+        root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
+//        stage = (Stage) ((javafx.scene.Node) getSource()).getScene().getWindow();
+        stage = (Stage) scene.getWindow();
+        scene= new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    void updateCherries(){
+        cherryCount.setText(String.valueOf(cherryCountInt));
+
+    }
     @FXML
     void updateScore(){
 //        this updates score when clicked using button
         String scoreTotext=String.valueOf(score.getCurrentScore());
 //        DisplayScore.setText(scoreTotext);
 //        scoreToDisplay.setText(scoreTotext);
-        cherryCount.setText(String.valueOf(cherryCountInt));
+
         scoreInt.setText(scoreTotext);
 
     }
@@ -136,6 +153,18 @@ public class Controller implements Initializable{
         stage.setScene(SceneMenu);
         stage.show();
 
+    }
+    public void tryToRevive() throws IOException {
+
+        if(cherryCountInt>0){
+            cherryCountInt--;
+            System.out.println("Revival successful!!");
+            updateCherries();
+            //callRevival();
+        }
+        else {
+            System.out.println("cherries are zero;cant revive");
+        }
     }
 
 
@@ -200,11 +229,15 @@ public class Controller implements Initializable{
             // checking if height of stick less than what is required, then hero falls
             if(StickI.getHeight() < Pillar_1.getDistance() - 20) {
                 HeroFalls();
+                System.out.println("called Revival");
+                tryToRevive();
                 // Set Best score accordingly
                 // Here after this, Switch scene to the revival or scorecard screen...
             }
             else  if(StickI.getHeight() > Pillar_1.getDistance() + 10){
                 HeroFalls();
+                System.out.println("called Revival");
+                tryToRevive();
             }
             else{
                 // if this happens then calculating  the incrementing score of the player
@@ -532,6 +565,7 @@ public class Controller implements Initializable{
                         Status = 1;
                         Cherry.setVisible(false);
                         cherryCountInt++;
+                        updateCherries();
 
                     }
                 }
@@ -542,7 +576,7 @@ public class Controller implements Initializable{
                     TheHero.setVisible(true);
                 }
             }
-            System.out.println(new_val + " " + FlipCount + " " + Cherry.getLayoutX());
+//            System.out.println(new_val + " " + FlipCount + " " + Cherry.getLayoutX());
             val = FlipCount;
         });
     }

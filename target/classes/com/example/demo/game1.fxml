@@ -63,13 +63,12 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Button layoutX="197.0" layoutY="162.0" mnemonicParsing="false" onAction="#updateScore" text="Button" />
-      <Text layoutX="81.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cherries:">
+      <Text layoutX="97.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cherries:">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fx:id="cherryCount" layoutX="140.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+      <Text fx:id="cherryCount" layoutX="153.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
          <font>
             <Font size="14.0" />
          </font>
