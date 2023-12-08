@@ -71,7 +71,17 @@ public class Controller implements Initializable{
     @FXML
     private TextField DisplayScore;
     @FXML
-    Text scoreText;
+    private Text scoreText;
+    @FXML
+    private Text scoreToDisplay;
+    @FXML
+    private Text cherryCount;
+//    to display in scene
+
+    private int cherryCountInt=0;
+//    stores cherries
+
+
 
 
 
@@ -88,11 +98,14 @@ public class Controller implements Initializable{
     private String ScorecardScreen = "scorecard.fxml";
     private String EntryScreen = "game.fxml";
     private String ExitScreen = "exit.fxml";
+    @FXML
+    private Text scoreInt;
+
 
 
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
-        music();
+        //music();
 
         root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -104,7 +117,10 @@ public class Controller implements Initializable{
     void updateScore(){
 //        this updates score when clicked using button
         String scoreTotext=String.valueOf(score.getCurrentScore());
-        DisplayScore.setText(scoreTotext);
+//        DisplayScore.setText(scoreTotext);
+//        scoreToDisplay.setText(scoreTotext);
+        cherryCount.setText(String.valueOf(cherryCountInt));
+        scoreInt.setText(scoreTotext);
 
     }
     @FXML
@@ -187,6 +203,9 @@ public class Controller implements Initializable{
                 // Set Best score accordingly
                 // Here after this, Switch scene to the revival or scorecard screen...
             }
+            else  if(StickI.getHeight() > Pillar_1.getDistance() + 10){
+                HeroFalls();
+            }
             else{
                 // if this happens then calculating  the incrementing score of the player
                 System.out.println("Before score :"+score.getCurrentScore());
@@ -194,6 +213,7 @@ public class Controller implements Initializable{
                 System.out.println("Adding score :"+score.getCurrentScore());
                 handleButtonAction();
                 randomizePillars();
+                updateScore();
             }
         }
     }
@@ -511,6 +531,8 @@ public class Controller implements Initializable{
                     if(Status == 0 && Math.abs(Cherry.getLayoutX() - new_val.intValue()) <= Cherry.getFitWidth()) {
                         Status = 1;
                         Cherry.setVisible(false);
+                        cherryCountInt++;
+
                     }
                 }
             }
@@ -536,14 +558,14 @@ public class Controller implements Initializable{
         // Create a Timeline for the animation
         Timeline timeline1 = new Timeline();
         // First KeyFrame: move the ImageView to halfDistance over half the total time
-        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero.translateXProperty(), halfDistance));
+        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero.translateXProperty(), halfDistance));
         timeline1.getKeyFrames().add(keyFrame1);
 
 
 
         Timeline Hero1 = new Timeline();
         // First KeyFrame: move the ImageView to halfDistance over half the total time
-        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
+        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
         Hero1.getKeyFrames().add(keyFrameHero1);
 
         Hero1.play();
@@ -551,12 +573,12 @@ public class Controller implements Initializable{
 
         Timeline timeline2 = new Timeline();
         // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
-        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(10000), new KeyValue(TheHero.translateXProperty(), totalDistance));
+        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero.translateXProperty(), totalDistance));
         timeline2.getKeyFrames().add(keyFrame2);
 
         Timeline hero2 = new Timeline();
         // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
-        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(10000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
+        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
         hero2.getKeyFrames().add(keyFramehero2);
 // Set an event handler for when the first KeyFrame is finished (i.e., when the ImageView has reached half its distance)
         timeline2.setOnFinished(event ->
