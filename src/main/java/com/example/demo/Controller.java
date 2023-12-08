@@ -1,8 +1,6 @@
 package com.example.demo;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
-import javafx.animation.RotateTransition;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -85,7 +82,6 @@ public class Controller implements Initializable{
         scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     @FXML
@@ -99,6 +95,9 @@ public class Controller implements Initializable{
 
     @FXML
     private ImageView TheHero; // This is the Hero character
+
+    @FXML
+    private ImageView TheHero1;
 
     @FXML
     private Label welcomeText; // This is just a welcome label
@@ -141,9 +140,12 @@ public class Controller implements Initializable{
         System.out.println("Stopped stretching stick length");
         InitializePillars();
         InitializeScore();
+        TheHero1.setVisible(false);
+
         if (elongateTimeline != null) {
             elongateTimeline.stop();
             rotateStick();
+            Cherry.setVisible(true);
             // Initially just making for constant distance
             // checking if height of stick less than what is required, then hero falls
             if(StickI.getHeight() < Pillar_1.getDistance() - 20) {
@@ -156,16 +158,12 @@ public class Controller implements Initializable{
                 score.setCurrentScore(score.getCurrentScore() + 10);
                 handleButtonAction();
             }
-
         }
     }
 
-
-
-
     MediaPlayer mediaPlayer;
     public void music() {
-        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
+        String s = "C:\\Users\\91828\\Downloads\\ProjectGame\\StickHeroGame\\src\\main\\music\\neon-gaming-128925.mp3";
         Media h = new Media(Paths.get(s).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
         mediaPlayer.play();
@@ -327,120 +325,184 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void handleButtonAction() {
-        TranslateTransition transition = new TranslateTransition();
-        transition.setDuration(Duration.millis(1000));
-        transition.setNode(TheHero);
-        System.out.println(MoveHero());
-        transition.setByX(MoveHero());
-        transition.setAutoReverse(true);
-        if(Counter == 0) {
-            Counter = 1;
-            transition.setOnFinished(new EventHandler<ActionEvent>() {
+    private ImageView Cherry;
 
-                @Override
-                public void handle(ActionEvent event) {
-                    Pillar1.setVisible(false);
-                    StickI.setVisible(false); // This is the user stick
+    @FXML
+    private Button Press;
 
-                    // This part is for moving the Hero
-                    TranslateTransition MovingHero = new TranslateTransition();
-                    MovingHero.setDuration(Duration.millis(1000));
-                    MovingHero.setNode(TheHero);
-                    MovingHero.setByX(-1 * MoveHero());
+    int FlipCount = 0, Status = 0;
 
-                    // THis part is for moving pillar2
-                    TranslateTransition MovingPillar2 = new TranslateTransition();
-                    MovingPillar2.setDuration(Duration.millis(1000));
-                    MovingPillar2.setNode(Pillar2);
-                    MovingPillar2.setByX(-1 * MoveHero());
+    @FXML
+    public void Flip() {
+        // THis function is for flipping the hero
+        if(FlipCount % 2 == 0) {
+            if(Cherry.getX() == TheHero.getX() && Status == 0) {
+                Cherry.setVisible(false);
+                Status = 1;
+                TheHero.setVisible(false);
+                TheHero1.setVisible(true);
+            }
+            else {
+                TheHero.setVisible(false);
+                TheHero1.setVisible(true);
+            }
 
-                    // This part is for moving Stick
-                    TranslateTransition MovingStick = new TranslateTransition();
-                    MovingStick.setDuration(Duration.millis(1000));
-                    MovingStick.setNode(StickI);
-                    MovingStick.setByX(-1 * MoveHero());
-
-                    // This part is for moving Pillar1
-                    TranslateTransition MovingPillar1 = new TranslateTransition();
-                    MovingPillar1.setDuration(Duration.millis(1000));
-                    MovingPillar1.setNode(Pillar1);
-                    MovingPillar1.setByX(MoveHero());
-
-                    MovingPillar2.play();
-                    MovingHero.play();
-                    MovingPillar1.play();
-                    MovingStick.play();
-
-                    MovingPillar1.setOnFinished(new EventHandler<ActionEvent>() {
-                        // when Pillar1 is at its place ...
-                        @Override
-                        public void handle(ActionEvent actionEvent) {
-                            Pillar1.setVisible(true);
-                            StickI.setHeight(Original_heightofStick); // Redo the height of stick
-                            // Rotating the stick 270Deg as initial condition
-                            rotateStick();
-                            rotateStick();
-                            rotateStick();
-                            StickI.setVisible(true);
-                        }
-                    });
-                }
-            });
-            transition.play();
         }
         else {
-            Counter = 0;
-            transition.setOnFinished(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Pillar2.setVisible(false);
-                    StickI.setVisible(false);
-
-                    // For moving hero
-                    TranslateTransition MovingHero = new TranslateTransition();
-                    MovingHero.setDuration(Duration.millis(1000));
-                    MovingHero.setNode(TheHero);
-                    MovingHero.setByX(-1 * MoveHero());
-
-                    // for moving pillar1
-                    TranslateTransition MovingPillar1 = new TranslateTransition();
-                    MovingPillar1.setDuration(Duration.millis(1000));
-                    MovingPillar1.setNode(Pillar1);
-                    MovingPillar1.setByX(-1 * MoveHero());
-
-                    // for moving pillar2
-                    TranslateTransition MovingPillar2 = new TranslateTransition();
-                    MovingPillar2.setDuration(Duration.millis(1000));
-                    MovingPillar2.setNode(Pillar2);
-                    MovingPillar2.setByX(MoveHero());
-
-                    // for moving stick
-                    TranslateTransition MovingStick = new TranslateTransition();
-                    MovingStick.setDuration(Duration.millis(1000));
-                    MovingStick.setNode(StickI);
-                    MovingStick.setByX(-1 * MoveHero());
-
-                    MovingPillar1.play();
-                    MovingHero.play();
-                    MovingPillar2.play();
-                    MovingStick.play();
-                    MovingPillar2.setOnFinished(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent actionEvent) {
-                            Pillar2.setVisible(true);
-
-                            StickI.setHeight(Original_heightofStick);
-                            rotateStick();
-                            rotateStick();
-                            rotateStick();
-                            StickI.setVisible(true);
-                        }
-                    });
-                }
-            });
-
-            transition.play();
+            TheHero.setVisible(true);
+            TheHero1.setVisible(false);
         }
+        FlipCount ++;
+    }
+
+    @FXML
+    private void handleButtonAction() {
+
+        // Assume 'imageView' is your ImageView and 'totalDistance' is the total distance you want to move it
+        double totalDistance = MoveHero(); // replace with your actual total distance
+        double halfDistance = Cherry.getLayoutX() - 45;
+
+        // Create a Timeline for the animation
+        Timeline timeline1 = new Timeline();
+        // First KeyFrame: move the ImageView to halfDistance over half the total time
+        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero.translateXProperty(), halfDistance));
+        timeline1.getKeyFrames().add(keyFrame1);
+
+
+
+        Timeline Hero1 = new Timeline();
+        // First KeyFrame: move the ImageView to halfDistance over half the total time
+        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
+        Hero1.getKeyFrames().add(keyFrameHero1);
+
+        Hero1.play();
+        timeline1.play();
+
+        Timeline timeline2 = new Timeline();
+        // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
+        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(10000), new KeyValue(TheHero.translateXProperty(), totalDistance));
+        timeline2.getKeyFrames().add(keyFrame2);
+
+        Timeline hero2 = new Timeline();
+        // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
+        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(10000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
+        hero2.getKeyFrames().add(keyFramehero2);
+// Set an event handler for when the first KeyFrame is finished (i.e., when the ImageView has reached half its distance)
+        timeline2.setOnFinished(event ->
+        {
+            if(Counter == 0) {
+                Counter = 1;
+                Pillar1.setVisible(false);
+                StickI.setVisible(false); // This is the user stick
+
+                // This part is for moving the Hero
+                TranslateTransition MovingHero = new TranslateTransition();
+                MovingHero.setDuration(Duration.millis(1000));
+                MovingHero.setNode(TheHero);
+                MovingHero.setByX(-1 * MoveHero());
+
+                TranslateTransition MovingHero1 = new TranslateTransition();
+                MovingHero1.setDuration(Duration.millis(1000));
+                MovingHero1.setNode(TheHero1);
+                MovingHero1.setByX(-1 * MoveHero());
+
+
+                // THis part is for moving pillar2
+                TranslateTransition MovingPillar2 = new TranslateTransition();
+                MovingPillar2.setDuration(Duration.millis(1000));
+                MovingPillar2.setNode(Pillar2);
+                MovingPillar2.setByX(-1 * MoveHero());
+
+                // This part is for moving Stick
+                TranslateTransition MovingStick = new TranslateTransition();
+                MovingStick.setDuration(Duration.millis(1000));
+                MovingStick.setNode(StickI);
+                MovingStick.setByX(-1 * MoveHero());
+
+                // This part is for moving Pillar1
+                TranslateTransition MovingPillar1 = new TranslateTransition();
+                MovingPillar1.setDuration(Duration.millis(1000));
+                MovingPillar1.setNode(Pillar1);
+                MovingPillar1.setByX(MoveHero());
+
+                MovingPillar2.play();
+                MovingHero.play();
+                MovingPillar1.play();
+                MovingStick.play();
+                MovingHero1.play();
+
+                MovingPillar1.setOnFinished(new EventHandler<ActionEvent>() {
+                    // when Pillar1 is at its place ...
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        Pillar1.setVisible(true);
+                        StickI.setHeight(Original_heightofStick); // Redo the height of stick
+                        // Rotating the stick 270Deg as initial condition
+                        rotateStick();
+                        rotateStick();
+                        rotateStick();
+                        StickI.setVisible(true);
+                    }
+                });
+            }
+            else {
+                Counter = 0;
+                Pillar2.setVisible(false);
+                StickI.setVisible(false);
+
+                // For moving hero
+                TranslateTransition MovingHero = new TranslateTransition();
+                MovingHero.setDuration(Duration.millis(1000));
+                MovingHero.setNode(TheHero);
+                MovingHero.setByX(-1 * MoveHero());
+
+                TranslateTransition MovingHero1 = new TranslateTransition();
+                MovingHero1.setDuration(Duration.millis(1000));
+                MovingHero1.setNode(TheHero1);
+                MovingHero1.setByX(-1 * MoveHero());
+
+                // for moving pillar1
+                TranslateTransition MovingPillar1 = new TranslateTransition();
+                MovingPillar1.setDuration(Duration.millis(1000));
+                MovingPillar1.setNode(Pillar1);
+                MovingPillar1.setByX(-1 * MoveHero());
+
+                // for moving pillar2
+                TranslateTransition MovingPillar2 = new TranslateTransition();
+                MovingPillar2.setDuration(Duration.millis(1000));
+                MovingPillar2.setNode(Pillar2);
+                MovingPillar2.setByX(MoveHero());
+
+                // for moving stick
+                TranslateTransition MovingStick = new TranslateTransition();
+                MovingStick.setDuration(Duration.millis(1000));
+                MovingStick.setNode(StickI);
+                MovingStick.setByX(-1 * MoveHero());
+
+                MovingPillar1.play();
+                MovingHero.play();
+                MovingPillar2.play();
+                MovingStick.play();
+                MovingHero1.play();
+                MovingPillar2.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        Pillar2.setVisible(true);
+
+                        StickI.setHeight(Original_heightofStick);
+                        rotateStick();
+                        rotateStick();
+                        rotateStick();
+                        StickI.setVisible(true);
+                    }
+                });
+            }
+            TheHero.setVisible(true);
+            TheHero1.setVisible(false);
+            Status = 0;
+            FlipCount = 0;
+        });
+        hero2.play();
+        timeline2.play();
     }
 }

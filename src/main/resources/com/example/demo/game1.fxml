@@ -15,7 +15,7 @@
             <Image url="@back4.png" />
          </image>
       </ImageView>
-      <Rectangle fx:id="Stick" arcHeight="5.0" arcWidth="5.0" fill="#000c16" height="15.0" layoutX="78.0" layoutY="217.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
+      <Rectangle fx:id="StickI" arcHeight="5.0" arcWidth="5.0" fill="#000c16" height="15.0" layoutX="78.0" layoutY="217.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
       <Button fx:id="PauseButton" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" onAction="#Pause" prefHeight="39.0" prefWidth="61.0" text="Pause" />
       <ImageView fx:id="TheHero" fitHeight="39.0" fitWidth="34.0" layoutX="45.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -37,5 +37,20 @@
             <Image url="@images/beta.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="Cherry" fitHeight="39.0" fitWidth="38.0" layoutX="119.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="TheHero1" fitHeight="39.0" fitWidth="34.0" layoutX="50.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+         <image>
+            <Image url="@images/hero.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="Press" layoutX="205.0" layoutY="284.0" mnemonicParsing="false" onAction="#Flip" opacity="0.58" prefHeight="68.0" prefWidth="70.0" style="-fx-background-radius: 1000;" text="Flip">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
