@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
@@ -88,7 +89,7 @@ public class Controller implements Initializable{
 
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
-        //music();
+        music();
 
         root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -168,8 +169,9 @@ public class Controller implements Initializable{
     void stopElongation(MouseEvent event) throws InterruptedException, IOException {
         System.out.println("Stopped stretching stick length");
         InitializePillars();
-
         TheHero1.setVisible(false);
+        TheHero1.setOpacity(1);
+        Cherry.setOpacity(1);
 
         if (elongateTimeline != null) {
             elongateTimeline.stop();
@@ -188,6 +190,7 @@ public class Controller implements Initializable{
                 score.setCurrentScore(score.getCurrentScore() + 10);
                 System.out.println("Adding score :"+score.getCurrentScore());
                 handleButtonAction();
+                randomizePillars();
             }
         }
     }
@@ -310,6 +313,14 @@ public class Controller implements Initializable{
     }
     @FXML
     private ImageView Pillar1;
+//    opening two different versions of the images
+
+    @FXML
+    Image delta = new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
+    @FXML
+    Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
+
+
 
 
     @FXML
@@ -318,6 +329,7 @@ public class Controller implements Initializable{
     private Pillar Pillar_1, Pillar_2;
 
     public int retRandom(){
+//        this returns a random value
         Random random=new Random();
         int ret=random.nextInt(100);
         if(ret<10){
@@ -327,7 +339,38 @@ public class Controller implements Initializable{
         return ret;
 
     }
-    public void randomizePillars() {
+    public void setDelta(){
+//        depending on the random values this changes
+//        the image attached to pillar1
+        Pillar1.setImage(delta);
+
+
+
+    }
+    public void setGamma(){
+//        this sets another image
+        Pillar1.setImage(gamma);
+
+    }
+    public void randomizePillars(){
+//        it ggenerates a random value
+//        depending on the random values
+//        it sets the image
+        Random rand=new Random();
+        int random=rand.nextInt(2);
+        if(random==0){
+            setDelta();
+        }
+        else{
+            setGamma();
+        }
+
+    }
+    public void randomizePillars2() {
+//        started with this fn but it did not serve the purpose
+//        its not used anywhere
+//        just in case we need specifically this code
+//        we wont need to start afresh
         double originalPillar1X = Pillar1.getLayoutX();
         double originalPillar1Y = Pillar1.getLayoutY();
 
@@ -364,7 +407,7 @@ public class Controller implements Initializable{
         Pillar_2 = new Pillar(Pillar2.getFitWidth(), Pillar2.getLayoutX() - Pillar1.getLayoutX());
 
         System.out.println("random called");
-        randomizePillars();
+//        randomizePillars();
 //        Pillar1.setFitWidth(retRandom());
 //        Pillar2.setFitWidth(retRandom());
 
