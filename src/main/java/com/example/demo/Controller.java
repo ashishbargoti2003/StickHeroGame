@@ -465,16 +465,44 @@ public class Controller implements Initializable{
     @FXML
     private Button Press;
 
-    int FlipCount = 0, Status = 0, val = 0, dis = 0;
+    int FlipCount = 0, Status = 0, val = 0, dis = 0, cnt = 0;
 
     @FXML
     public void Flip() {
         FlipCount ++;
+        if((Pillar1.getLayoutX() - TheHero.getLayoutX()) > (Pillar2.getLayoutX() - TheHero.getLayoutX())) {
+            dis = (int) Pillar1.getLayoutX();
+        }
+        else {
+            dis = (int) Pillar2.getLayoutX();
+        }
 //         THis function is for flipping the hero
         DoubleProperty xValue = new SimpleDoubleProperty();
         xValue.bind(TheHero.translateXProperty());
         xValue.addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             if(FlipCount % 2 == 1) {
+                if(Math.abs(dis - new_val.intValue()) <= Pillar1.getFitWidth() && cnt == 0) {
+                    TranslateTransition HeroFalling = new TranslateTransition();
+                    HeroFalling.setDuration(Duration.millis(1000));
+                    HeroFalling.setNode(TheHero1);
+                    HeroFalling.setByY(500);
+                    HeroFalling.setOnFinished(new EventHandler<ActionEvent>() {
+
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            try {
+//                            updateScore();
+                                SwitchToScoreCard();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
+
+                    });
+                    HeroFalling.play();
+                    cnt++;
+                }
                 if(val != FlipCount) {
                     TheHero.setVisible(false);
                     TheHero1.setVisible(true);
