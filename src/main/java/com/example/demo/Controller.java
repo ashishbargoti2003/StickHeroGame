@@ -88,7 +88,7 @@ public class Controller implements Initializable{
 
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
-        music();
+        //music();
 
         root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -240,10 +240,19 @@ public class Controller implements Initializable{
 
     @FXML
     private Button PlayAgain;
+    int flag=0;
+
 
     private Rotate rotateTransform;
+    double fixedHeight;
     @FXML
     public void rotateStick(){
+        if(flag==0){
+//            calculating original height of pillar
+//            flag to make sure runs only once
+            fixedHeight=Pillar1.getFitHeight();
+            flag=1;
+        }
         Timeline rotationTimeline;
         // Calculate the base of the stick
         double baseX = StickI.getX() + StickI.getWidth() / 2;
@@ -302,6 +311,7 @@ public class Controller implements Initializable{
     @FXML
     private ImageView Pillar1;
 
+
     @FXML
     private ImageView Pillar2;
 
@@ -317,20 +327,51 @@ public class Controller implements Initializable{
         return ret;
 
     }
+    public void randomizePillars() {
+        double originalPillar1X = Pillar1.getLayoutX();
+        double originalPillar1Y = Pillar1.getLayoutY();
+
+        double originalPillar2X = Pillar2.getLayoutX();
+        double originalPillar2Y = Pillar2.getLayoutY();
+
+        // Randomize the widths of Pillar1 and Pillar2
+        int randomWidth1 = retRandom();
+        int randomWidth2 = retRandom();
+
+        // Set the width of Pillar1 and Pillar2
+        Pillar1.setFitWidth(randomWidth1);
+        Pillar2.setFitWidth(randomWidth2);
+
+        // Fix the height of the pillars
+        double fixedHeight = 150.0; // Replace with the desired fixed height value
+        System.out.println("Setting 150 as height");
+        Pillar1.setFitHeight(fixedHeight);
+        Pillar2.setFitHeight(fixedHeight);
+
+        // Set the layout positions to keep the base fixed
+        Pillar1.setLayoutX(originalPillar1X);
+        Pillar1.setLayoutY(originalPillar1Y);
+
+        Pillar2.setLayoutX(originalPillar2X);
+        Pillar2.setLayoutY(originalPillar2Y);
+    }
+
 
 
     public void InitializePillars() {
         // This is for initializing the two pillar's
         Pillar_1 = new Pillar(Pillar1.getFitWidth(), Pillar2.getLayoutX() - Pillar1.getLayoutX());
         Pillar_2 = new Pillar(Pillar2.getFitWidth(), Pillar2.getLayoutX() - Pillar1.getLayoutX());
-        System.out.println("random: "+retRandom());
+
+        System.out.println("random called");
+        randomizePillars();
 //        Pillar1.setFitWidth(retRandom());
 //        Pillar2.setFitWidth(retRandom());
 
 
         System.out.println("pillar1: "+Pillar1.getFitWidth());
         System.out.println("pillar2: "+Pillar2.getFitWidth());
-        System.out.printf("value is %f, %f, %f, %f\n", Pillar_1.getDistance(), Pillar_2.getDistance(), Pillar_1.getWidth(), Pillar_2.getWidth());
+
     }
 
     int Counter = 0;
