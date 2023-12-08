@@ -10,10 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -21,6 +23,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -32,6 +35,10 @@ import static java.lang.Thread.sleep;
 
 /*
 * New Things Done -
+* Added music
+*
+*
+*
 * I have added falling of hero when distance of stick less than distance between pillar using
 * function HeroFalls but now this is just checking for constant distance
 *
@@ -57,6 +64,12 @@ public class Controller implements Initializable{
 
     @FXML
     private Rectangle StickI; // This is the main stick
+    @FXML
+    private TextField DisplayScore;
+    @FXML
+    Text scoreText;
+
+
 
     final double Original_heightofStick = 10; // This is the original Height of the Stick
 
@@ -83,15 +96,31 @@ public class Controller implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    void updateScore(){
+//        this updates score when clicked using button
+        String scoreTotext=String.valueOf(score.getCurrentScore());
+        DisplayScore.setText(scoreTotext);
 
+    }
     @FXML
     public void SwitchToScoreCard() throws IOException {
+
+
+
+
         Parent menu_parent = FXMLLoader.load(getClass().getResource("scorecard.fxml"));
         Scene SceneMenu = new Scene(menu_parent);
+
         Stage stage = (Stage) TheHero.getParent().getScene().getWindow();
         stage.setScene(SceneMenu);
         stage.show();
+
     }
+
+
+
+
 
     @FXML
     private ImageView TheHero; // This is the Hero character
@@ -108,7 +137,7 @@ public class Controller implements Initializable{
     }
 
 //    Score variable for the initail hero
-    private ScoreCard score;
+    private ScoreCard score=new ScoreCard(0);
 
     public void InitializeScore() {
         score = new ScoreCard(0);
@@ -139,7 +168,7 @@ public class Controller implements Initializable{
     void stopElongation(MouseEvent event) throws InterruptedException, IOException {
         System.out.println("Stopped stretching stick length");
         InitializePillars();
-        InitializeScore();
+
         TheHero1.setVisible(false);
 
         if (elongateTimeline != null) {
@@ -155,7 +184,9 @@ public class Controller implements Initializable{
             }
             else{
                 // if this happens then calculating  the incrementing score of the player
+                System.out.println("Before score :"+score.getCurrentScore());
                 score.setCurrentScore(score.getCurrentScore() + 10);
+                System.out.println("Adding score :"+score.getCurrentScore());
                 handleButtonAction();
             }
         }
@@ -163,7 +194,7 @@ public class Controller implements Initializable{
 
     MediaPlayer mediaPlayer;
     public void music() {
-        String s = "C:\\Users\\91828\\Downloads\\ProjectGame\\StickHeroGame\\src\\main\\music\\neon-gaming-128925.mp3";
+        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
         Media h = new Media(Paths.get(s).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
         mediaPlayer.play();
@@ -206,8 +237,6 @@ public class Controller implements Initializable{
         StickI.setHeight(newHeight);
     }
 
-    @FXML
-    private TextField DisplayScore;
 
     @FXML
     private Button PlayAgain;
@@ -278,11 +307,29 @@ public class Controller implements Initializable{
 
     private Pillar Pillar_1, Pillar_2;
 
+    public int retRandom(){
+        Random random=new Random();
+        int ret=random.nextInt(100);
+        if(ret<10){
+            return 10;
+        }
+
+        return ret;
+
+    }
+
 
     public void InitializePillars() {
         // This is for initializing the two pillar's
         Pillar_1 = new Pillar(Pillar1.getFitWidth(), Pillar2.getLayoutX() - Pillar1.getLayoutX());
         Pillar_2 = new Pillar(Pillar2.getFitWidth(), Pillar2.getLayoutX() - Pillar1.getLayoutX());
+        System.out.println("random: "+retRandom());
+//        Pillar1.setFitWidth(retRandom());
+//        Pillar2.setFitWidth(retRandom());
+
+
+        System.out.println("pillar1: "+Pillar1.getFitWidth());
+        System.out.println("pillar2: "+Pillar2.getFitWidth());
         System.out.printf("value is %f, %f, %f, %f\n", Pillar_1.getDistance(), Pillar_2.getDistance(), Pillar_1.getWidth(), Pillar_2.getWidth());
     }
 
@@ -310,6 +357,7 @@ public class Controller implements Initializable{
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         try {
+//                            updateScore();
                             SwitchToScoreCard();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
