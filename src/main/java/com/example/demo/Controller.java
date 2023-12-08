@@ -1,6 +1,9 @@
 package com.example.demo;
 
 import javafx.animation.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -197,7 +200,7 @@ public class Controller implements Initializable{
 
     MediaPlayer mediaPlayer;
     public void music() {
-        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
+        String s = "C:\\Users\\91828\\Downloads\\newProject\\StickHeroGame\\src\\main\\music\\neon-gaming-128925.mp3";
         Media h = new Media(Paths.get(s).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
         mediaPlayer.play();
@@ -462,30 +465,38 @@ public class Controller implements Initializable{
     @FXML
     private Button Press;
 
-    int FlipCount = 0, Status = 0;
+    int FlipCount = 0, Status = 0, val = 0, dis = 0;
 
     @FXML
     public void Flip() {
-        // THis function is for flipping the hero
-        if(FlipCount % 2 == 0) {
-            if(Cherry.getX() == TheHero.getX() && Status == 0) {
-                Cherry.setVisible(false);
-                Status = 1;
-                TheHero.setVisible(false);
-                TheHero1.setVisible(true);
+        FlipCount ++;
+//         THis function is for flipping the hero
+        DoubleProperty xValue = new SimpleDoubleProperty();
+        xValue.bind(TheHero.translateXProperty());
+        xValue.addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            if(FlipCount % 2 == 1) {
+                if(val != FlipCount) {
+                    TheHero.setVisible(false);
+                    TheHero1.setVisible(true);
+                }
+                else {
+                    if(Status == 0 && Math.abs(Cherry.getLayoutX() - new_val.intValue()) <= Cherry.getFitWidth()) {
+                        Status = 1;
+                        Cherry.setVisible(false);
+                    }
+                }
             }
             else {
-                TheHero.setVisible(false);
-                TheHero1.setVisible(true);
+                if(val != FlipCount) {
+                    TheHero1.setVisible(false);
+                    TheHero.setVisible(true);
+                }
             }
-
-        }
-        else {
-            TheHero.setVisible(true);
-            TheHero1.setVisible(false);
-        }
-        FlipCount ++;
+            System.out.println(new_val + " " + FlipCount + " " + Cherry.getLayoutX());
+            val = FlipCount;
+        });
     }
+
 
     @FXML
     private void handleButtonAction() {
