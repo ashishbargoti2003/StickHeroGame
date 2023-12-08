@@ -35,6 +35,8 @@ import static java.lang.Thread.sleep;
 * I have added falling of hero when distance of stick less than distance between pillar using
 * function HeroFalls but now this is just checking for constant distance
 *
+* Added Pillar for taking distance and added score variable for score
+*
 * I have also removed the error when coming while extending stick
 *
 * Also added scorecard scene on which hitting play will take you to again the game scene
@@ -91,7 +93,6 @@ public class Controller implements Initializable{
         stage.show();
     }
 
-
     @FXML
     private ImageView TheHero; // This is the Hero character
 
@@ -101,11 +102,16 @@ public class Controller implements Initializable{
     @FXML
     void onHelloButtonClick(MouseEvent event) {
         System.out.println("clicked");
-
     }
 
 //    Score variable for the initail hero
-    ScoreCard score = new ScoreCard(0);
+    private ScoreCard score;
+
+    public void InitializeScore() {
+        score = new ScoreCard(0);
+        score.setCurrentScore(0);
+    }
+
     boolean isMousePressed = true;
 
     private Timeline elongateTimeline;
@@ -129,13 +135,14 @@ public class Controller implements Initializable{
     @FXML
     void stopElongation(MouseEvent event) throws InterruptedException, IOException {
         System.out.println("Stopped stretching stick length");
-
+        InitializePillars();
+        InitializeScore();
         if (elongateTimeline != null) {
             elongateTimeline.stop();
             rotateStick();
             // Initially just making for constant distance
             // checking if height of stick less than what is required, then hero falls
-            if(StickI.getHeight() < 280) {
+            if(StickI.getHeight() < Pillar_1.getDistance() - 20) {
                 HeroFalls();
                 // Set Best score accordingly
                 // Here after this, Switch scene to the revival or scorecard screen...
@@ -166,6 +173,7 @@ public class Controller implements Initializable{
 
         double originalY = StickI.getY();
         double originalHeight = StickI.getHeight();
+        // This is amount of elongation
         double newHeight = originalHeight + 70; // You can adjust the value as needed
 
         // Adjust the position of the rectangle to keep the base fixed
@@ -254,11 +262,15 @@ public class Controller implements Initializable{
     @FXML
     private ImageView Pillar2;
 
+    private Pillar Pillar_1, Pillar_2;
+
 
     public void InitializePillars() {
-        System.out.printf("value is %f\n, %f\n", Pillar1.getFitWidth(), Pillar2.getFitWidth());
+        // This is for initializing the two pillar's
+        Pillar_1 = new Pillar(Pillar1.getFitWidth(), Pillar2.getLayoutX() - Pillar1.getLayoutX());
+        Pillar_2 = new Pillar(Pillar2.getFitWidth(), Pillar2.getLayoutX() - Pillar1.getLayoutX());
+        System.out.printf("value is %f, %f, %f, %f\n", Pillar_1.getDistance(), Pillar_2.getDistance(), Pillar_1.getWidth(), Pillar_2.getWidth());
     }
-
 
     int Counter = 0;
 
@@ -284,9 +296,7 @@ public class Controller implements Initializable{
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         try {
-//                            DisplayScore.setText("" + score.getCurrentScore());
                             SwitchToScoreCard();
-
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
