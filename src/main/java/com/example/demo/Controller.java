@@ -141,6 +141,8 @@ public class Controller implements Initializable{
         InitializePillars();
         InitializeScore();
         TheHero1.setVisible(false);
+        TheHero1.setOpacity(1);
+        Cherry.setOpacity(1);
 
         if (elongateTimeline != null) {
             elongateTimeline.stop();
