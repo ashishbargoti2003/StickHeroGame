@@ -85,7 +85,7 @@ public class Controller implements Initializable{
     private Text cherryCount;
 //    to display in scene
 
-    private int cherryCountInt=0;
+    private int cherryCountInt=1;
 //    stores cherries
 
 
@@ -120,6 +120,90 @@ public class Controller implements Initializable{
 
     @FXML
     Button playAgain;
+    @FXML
+    public void reviveButton2() throws IOException, InterruptedException {
+        if(flag1 == 0) {
+            StickI.setVisible(false);
+            TheHero.setVisible(true);
+            TheHero1.setVisible(false);
+            Hero hero1=new Hero(TheHero,StickI);
+            Thread t1=new Thread(hero1);
+
+
+            Hero hero2=new Hero(TheHero1,StickI);
+            Thread t2=new Thread(hero2);
+            t1.start();
+            t2.start();
+            t1.join();
+            t2.join();
+
+
+
+            TranslateTransition MovingStick = new TranslateTransition();
+            MovingStick.setDuration(Duration.millis(1000));
+            MovingStick.setNode(StickI);
+            MovingStick.setByX(-1 * StickI.getHeight());
+            MovingStick.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    StickI.setHeight(Original_heightofStick);
+                    rotateStick();
+                    rotateStick();
+                    rotateStick();
+                    StickI.setVisible(true);
+                }
+            });
+//            HeroFalling1.play();
+            MovingStick.play();
+//            HeroFalling1.play();
+
+            revive.setOpacity(0);
+        }
+        else {
+            flag1 = 0;
+            StickI.setVisible(false);
+            TheHero.setVisible(true);
+            TheHero1.setVisible(false);
+
+            TranslateTransition HeroFalling1 = new TranslateTransition();
+            HeroFalling1.setDuration(Duration.millis(1000));
+            HeroFalling1.setNode(TheHero);
+            HeroFalling1.setByY(-1 * 500);
+            HeroFalling1.setByX(-1 * StickI.getHeight());
+
+            TranslateTransition HeroFalling2 = new TranslateTransition();
+            HeroFalling2.setDuration(Duration.millis(1000));
+            HeroFalling2.setNode(TheHero1);
+            HeroFalling2.setByY(-1 * 500);
+            HeroFalling2.setByX(-1 * StickI.getHeight());
+
+            TranslateTransition MovingStick = new TranslateTransition();
+            MovingStick.setDuration(Duration.millis(1000));
+            MovingStick.setNode(StickI);
+            MovingStick.setByX(-1 * StickI.getHeight());
+            MovingStick.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    StickI.setHeight(Original_heightofStick);
+                    rotateStick();
+                    rotateStick();
+                    rotateStick();
+                    rotateStick();
+                    StickI.setVisible(true);
+                }
+            });
+            HeroFalling1.play();
+            MovingStick.play();
+            HeroFalling2.play();
+
+            revive.setOpacity(0);
+        }
+        Status = 0;
+        cnt = 0;
+        val = 0;
+        dis = 0;
+        FlipCount =0 ;
+    }
 
 
 
@@ -751,6 +835,8 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
                     }
                 });
                 HeroFalling.play();
+//                to chage
+//                HeroFalling1.play();
             }
         });
         transition.play();
@@ -862,14 +948,14 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
         // Create a Timeline for the animation
         Timeline timeline1 = new Timeline();
         // First KeyFrame: move the ImageView to halfDistance over half the total time
-        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero.translateXProperty(), halfDistance));
+        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero.translateXProperty(), halfDistance));
         timeline1.getKeyFrames().add(keyFrame1);
 
 
 
         Timeline Hero1 = new Timeline();
         // First KeyFrame: move the ImageView to halfDistance over half the total time
-        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
+        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
         Hero1.getKeyFrames().add(keyFrameHero1);
 
         Hero1.play();
@@ -877,12 +963,12 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
 
         Timeline timeline2 = new Timeline();
         // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
-        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero.translateXProperty(), totalDistance));
+        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero.translateXProperty(), totalDistance));
         timeline2.getKeyFrames().add(keyFrame2);
 
         Timeline hero2 = new Timeline();
         // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
-        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
+        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
         hero2.getKeyFrames().add(keyFramehero2);
 // Set an event handler for when the first KeyFrame is finished (i.e., when the ImageView has reached half its distance)
         timeline2.setOnFinished(event ->
@@ -1002,4 +1088,5 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
         hero2.play();
         timeline2.play();
     }
+
 }

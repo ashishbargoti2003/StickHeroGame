@@ -42,16 +42,51 @@ public class HomePage extends Application implements HomePageInterface{
     @FXML
     private Button BestScore;
 
+    public class SceneFactory {
+        public Scene getScene(String type, ActionEvent event) throws IOException {
+            Parent root;
+            if ("Playground".equalsIgnoreCase(type)) {
+                root = FXMLLoader.load(getClass().getResource("game1.fxml"));
+            } else if ("Playground1".equalsIgnoreCase(type)) {
+                root = FXMLLoader.load(getClass().getResource("game.fxml"));
+            } else if ("Help".equalsIgnoreCase(type)) {
+                root = FXMLLoader.load(getClass().getResource("help.fxml"));
+            } else {
+                throw new IllegalArgumentException("Invalid type: " + type);
+            }
+            return new Scene(root);
+        }
+    }
 
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
         music();
-        root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
+        SceneFactory sceneFactory = new SceneFactory();
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        scene= new Scene(root);
+        scene = sceneFactory.getScene("Playground", event);
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    public void switchToPlayground1(ActionEvent event) throws IOException {
+        SceneFactory sceneFactory = new SceneFactory();
+        stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        scene = sceneFactory.getScene("Playground1", event);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void Help(ActionEvent event) throws IOException {
+        SceneFactory sceneFactory = new SceneFactory();
+        stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        scene = sceneFactory.getScene("Help", event);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
     MediaPlayer mediaPlayer;
 
     public void music() {
@@ -61,28 +96,6 @@ public class HomePage extends Application implements HomePageInterface{
         mediaPlayer.play();
 
     }
-
-    @FXML
-    public void switchToPlayground1(ActionEvent event) throws IOException {
-        root= FXMLLoader.load(this.getClass().getResource("game.fxml"));
-        stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        scene= new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void Help(ActionEvent event) throws IOException {
-        root= FXMLLoader.load(this.getClass().getResource("help.fxml"));
-        stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        scene= new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-
-
 
 
     public void gameControl() { }
