@@ -108,6 +108,11 @@ public class Controller implements Initializable{
 
     @FXML
     private Text scoreInt;
+    @FXML
+    TextField exitScore;
+    @FXML
+    Rectangle rectangleScore;
+
 
     @FXML
     public void reviveButton() throws IOException {
@@ -202,13 +207,20 @@ public class Controller implements Initializable{
     }
     @FXML
     public void SwitchToScoreCard() throws IOException {
+        exitScore.setText(String.valueOf(score.getCurrentScore()));
+        rectangleScore.setOpacity(1);
 
-        Parent menu_parent = FXMLLoader.load(getClass().getResource("scorecard.fxml"));
-        Scene SceneMenu = new Scene(menu_parent);
 
-        Stage stage = (Stage) TheHero.getParent().getScene().getWindow();
-        stage.setScene(SceneMenu);
-        stage.show();
+
+        exitScore.setOpacity(1);
+
+
+//        Parent menu_parent = FXMLLoader.load(getClass().getResource("scorecard.fxml"));
+//        Scene SceneMenu = new Scene(menu_parent);
+//
+//        Stage stage = (Stage) TheHero.getParent().getScene().getWindow();
+//        stage.setScene(SceneMenu);
+//        stage.show();
 
     }
     @FXML
