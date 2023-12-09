@@ -63,6 +63,9 @@ import static java.lang.Thread.sleep;
 *
  */
 public class Controller implements Initializable{
+
+    private Player player;
+
     @FXML
     public Rectangle stick2;
 
@@ -100,6 +103,11 @@ public class Controller implements Initializable{
     private String ExitScreen = "exit.fxml";
     @FXML
     private Text scoreInt;
+//    public void saveProgress{
+//        player.setCherriesCollected(cherryCountInt);
+//        int highest=score.getBestScore()
+//        player.setHighestScore();
+//    }
 
 
 
@@ -126,6 +134,7 @@ public class Controller implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
+
     void updateCherries(){
         cherryCount.setText(String.valueOf(cherryCountInt));
 
@@ -160,7 +169,7 @@ public class Controller implements Initializable{
             cherryCountInt--;
             System.out.println("Revival successful!!");
             updateCherries();
-            //callRevival();
+            callRevival();
         }
         else {
             System.out.println("cherries are zero;cant revive");
