@@ -1,8 +1,9 @@
 package com.example.demo;
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Player {
+public class Player implements Serializable {
     private String name;
     private int HighestScore;
     private int score;

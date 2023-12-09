@@ -73,5 +73,7 @@
             <Font size="14.0" />
          </font>
       </Text>
+      <Button layoutX="313.0" layoutY="20.0" mnemonicParsing="false" onAction="#saveButton" prefHeight="24.0" prefWidth="70.0" text="Save " />
+      <Button fx:id="revive" layoutX="416.0" layoutY="154.0" mnemonicParsing="false" onAction="#reviveButton" text="Revive" />
    </children>
 </AnchorPane>

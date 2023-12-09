@@ -24,7 +24,10 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Random;
@@ -64,7 +67,11 @@ import static java.lang.Thread.sleep;
  */
 public class Controller implements Initializable{
 
-    private Player player;
+    private Player player=new Player();
+    @FXML
+    Button revive;
+
+
 
     @FXML
     public Rectangle stick2;
@@ -101,13 +108,41 @@ public class Controller implements Initializable{
     private String ScorecardScreen = "scorecard.fxml";
     private String EntryScreen = "game.fxml";
     private String ExitScreen = "exit.fxml";
+
     @FXML
     private Text scoreInt;
-//    public void saveProgress{
-//        player.setCherriesCollected(cherryCountInt);
-//        int highest=score.getBestScore()
-//        player.setHighestScore();
-//    }
+
+    @FXML
+    public void reviveButton() throws IOException {
+        TranslateTransition HeroFalling1 = new TranslateTransition();
+        HeroFalling1.setDuration(Duration.millis(1000));
+        HeroFalling1.setNode(TheHero);
+        HeroFalling1.setByY(-1 * 500);
+        HeroFalling1.setByX(-1 * StickI.getHeight());
+        HeroFalling1.play();
+
+
+// Set the coordinates of TheHero back to their initial values
+//        TheHero.setLayoutX(45.0);
+//        TheHero.setLayoutY(199.0);
+//        System.out.println("we have set the coordinates");
+//
+//        // Create a TranslateTransition for falling
+//        TranslateTransition HeroFalling1 = new TranslateTransition();
+//        HeroFalling1.setDuration(Duration.millis(1000));
+//        HeroFalling1.setNode(TheHero);
+//        HeroFalling1.setByY(199);
+//        HeroFalling1.setByX(45);
+//        HeroFalling1.play();
+
+
+
+//
+//        SwitchToScoreCard1();
+//        System.out.println("changing  the scoreboard");
+
+    }
+
 
 
 
@@ -161,14 +196,37 @@ public class Controller implements Initializable{
     }
     @FXML
     public void SwitchToScoreCard1() throws IOException {
+        updateScoreboard();
+//        System.out.println("cherries: "+ player.getCherriesCollected());
+//        System.out.println("prevscore: "+player.getScore());
 
         Parent menu_parent = FXMLLoader.load(getClass().getResource("game1.fxml"));
         Scene SceneMenu = new Scene(menu_parent);
+        System.out.println("cherries: "+ player.getCherriesCollected());
+        System.out.println("prevscore: "+player.getScore());
+
+
+
 
         Stage stage = (Stage) TheHero.getParent().getScene().getWindow();
         stage.setScene(SceneMenu);
+        revive.setOpacity(0);
         stage.show();
 
+        System.out.println("updated scoreboard!");
+
+    }
+    public void updateScoreboard(){
+        String c=String.valueOf(player.getCherriesCollected());
+        System.out.println("cherries: "+ c);
+        cherryCount.setText(c);
+        String scoreB=String.valueOf(player.getScore());
+        System.out.println("Sccore"+scoreB);
+
+        scoreInt.setText(String.valueOf(player.getScore()));
+        System.out.println("------------------------------------------");
+        System.out.println(cherryCount.getText());
+        System.out.println(scoreInt.getText());
     }
     public int tryToRevive() throws IOException {
 
@@ -207,6 +265,44 @@ public class Controller implements Initializable{
 //    Score variable for the initail hero
     private ScoreCard score=new ScoreCard(0);
 
+    public void saveButton() throws IOException {
+        saveProgress();
+        serializePlayer();
+        System.out.println("player Saved to File Successfully!");
+    }
+
+
+    public void serializePlayer() throws IOException {
+        ObjectOutputStream out=null;
+        try{
+            out=new ObjectOutputStream(new FileOutputStream("PlayerProgress.txt"));
+            out.writeObject(player);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if(out!=null){
+                out.close();
+            }
+        }
+
+    }
+
+@FXML
+    public void saveProgress() throws IOException {
+        player.setCherriesCollected(cherryCountInt);
+        int highest=score.getBestScore();
+        player.setHighestScore(highest);
+        player.setScore(score.getCurrentScore());
+        System.out.println("progress is saved!");
+        //serializePlayer();
+
+
+    }
+
     public void InitializeScore() {
         score = new ScoreCard(0);
         score.setCurrentScore(0);
@@ -230,6 +326,7 @@ public class Controller implements Initializable{
 
         elongateTimeline.play();
     }
+
 
 
     @FXML
@@ -273,6 +370,7 @@ public class Controller implements Initializable{
     }
 
     MediaPlayer mediaPlayer;
+
     public void music() {
         String s = "C:\\Users\\91828\\Downloads\\newProject\\StickHeroGame\\src\\main\\music\\neon-gaming-128925.mp3";
         Media h = new Media(Paths.get(s).toUri().toString());
@@ -519,10 +617,16 @@ public class Controller implements Initializable{
                             if(tryToRevive() > 0) {
                                 // Error is here showing this.scene is null
 //                                callRevival();
-                                SwitchToScoreCard1();
+                                saveProgress();
+
+                                revive.setOpacity(1);
+
+
+
 
                             }
                             else {
+                                saveProgress();
                                 SwitchToScoreCard();
                             }
                         } catch (IOException e) {
