@@ -598,11 +598,11 @@ public class Controller implements Initializable{
 
 //    D:\college\gitProject\StickHeroGame\src\main\resources\com\example\demo\delta.png
     @FXML
-//Image delta = new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
-    Image delta = new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
+Image delta = new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
+//    Image delta = new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
     @FXML
-//Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
-Image gamma=new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
+Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
+//Image gamma=new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
 
 
 

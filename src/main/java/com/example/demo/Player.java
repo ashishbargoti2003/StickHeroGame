@@ -31,6 +31,9 @@ public class Player implements Serializable {
 
     public void setScore(int score) {
         this.score = score;
+        if(this.score>this.getHighestScore()){
+            this.setHighestScore(this.getScore());
+        }
     }
 
     public int getCherriesCollected() {

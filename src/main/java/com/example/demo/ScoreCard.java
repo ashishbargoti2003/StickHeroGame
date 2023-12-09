@@ -25,6 +25,9 @@ public class ScoreCard {
 
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
+        if(this.currentScore>this.getBestScore()){
+            this.setBestScore(this.getCurrentScore());
+        }
     }
 
     @Override
