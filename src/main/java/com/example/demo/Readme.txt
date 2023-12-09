@@ -1,3 +1,0 @@
-                                Stick Hero Game
-
-
