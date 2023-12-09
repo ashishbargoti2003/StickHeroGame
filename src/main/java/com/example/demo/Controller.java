@@ -159,18 +159,28 @@ public class Controller implements Initializable{
         stage.show();
 
     }
+    @FXML
+    public void SwitchToScoreCard1() throws IOException {
+
+        Parent menu_parent = FXMLLoader.load(getClass().getResource("game1.fxml"));
+        Scene SceneMenu = new Scene(menu_parent);
+
+        Stage stage = (Stage) TheHero.getParent().getScene().getWindow();
+        stage.setScene(SceneMenu);
+        stage.show();
+
+    }
     public int tryToRevive() throws IOException {
 
         if(cherryCountInt>0){
             cherryCountInt--;
             System.out.println("Revival successful!!");
             updateCherries();
-<<<<<<< HEAD
-            callRevival();
-=======
+
+
+
             return 1;
-            //callRevival();
->>>>>>> 1ed493c05e3fb537b676245e05da34415db69973
+
         }
         else {
             System.out.println("cherries are zero;cant revive");
@@ -239,6 +249,8 @@ public class Controller implements Initializable{
             if(StickI.getHeight() < Pillar_1.getDistance() - 20) {
                 HeroFalls();
                 System.out.println("called Revival");
+//                tryToRevive();
+
 
                 // Set Best score accordingly
                 // Here after this, Switch scene to the revival or scorecard screen...
@@ -246,7 +258,7 @@ public class Controller implements Initializable{
             else  if(StickI.getHeight() > Pillar_1.getDistance() + 10){
                 HeroFalls();
                 System.out.println("called Revival");
-                tryToRevive();
+//                tryToRevive();
             }
             else{
                 // if this happens then calculating  the incrementing score of the player
@@ -506,7 +518,9 @@ public class Controller implements Initializable{
                         try {
                             if(tryToRevive() > 0) {
                                 // Error is here showing this.scene is null
-                                callRevival();
+//                                callRevival();
+                                SwitchToScoreCard1();
+
                             }
                             else {
                                 SwitchToScoreCard();
