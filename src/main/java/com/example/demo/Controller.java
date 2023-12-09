@@ -117,6 +117,12 @@ public class Controller implements Initializable{
     int FlipCount = 0, Status = 0, val = 0, dis = 0, cnt = 0;
 
     int flag1 = 0;
+
+    @FXML
+    Button playAgain;
+
+
+
     @FXML
     public void reviveButton() throws IOException {
         if(flag1 == 0) {
@@ -204,15 +210,26 @@ public class Controller implements Initializable{
 
 
 
+    public void setPlayAgainOpacity(){
+
+        playAgain.setOpacity(0);
+    }
+
+
+
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
+//        playAgain.setOpacity(0);
+
         //music();
 
         root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         scene= new Scene(root);
         stage.setScene(scene);
+//        playAgain.setOpacity(0);
         stage.show();
+
     }
 
     @FXML
@@ -242,6 +259,7 @@ public class Controller implements Initializable{
     }
     @FXML
     public void SwitchToScoreCard() throws IOException {
+        playAgain.setOpacity(1);
         exitScore.setText(String.valueOf(score.getCurrentScore()));
         rectangleScore.setOpacity(1);
 
