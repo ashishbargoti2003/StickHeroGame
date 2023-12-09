@@ -114,58 +114,93 @@ public class Controller implements Initializable{
     Rectangle rectangleScore;
 
 
+    int FlipCount = 0, Status = 0, val = 0, dis = 0, cnt = 0;
+
+    int flag1 = 0;
     @FXML
     public void reviveButton() throws IOException {
-        StickI.setVisible(false);
-        TranslateTransition HeroFalling1 = new TranslateTransition();
-        HeroFalling1.setDuration(Duration.millis(1000));
-        HeroFalling1.setNode(TheHero);
-        HeroFalling1.setByY(-1 * 500);
-        HeroFalling1.setByX(-1 * StickI.getHeight());
+        if(flag1 == 0) {
+            StickI.setVisible(false);
+            TheHero.setVisible(true);
+            TheHero1.setVisible(false);
 
-        TranslateTransition MovingStick = new TranslateTransition();
-        MovingStick.setDuration(Duration.millis(1000));
-        MovingStick.setNode(StickI);
-        MovingStick.setByX(-1 * StickI.getHeight());
-        MovingStick.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                StickI.setHeight(Original_heightofStick);
-                rotateStick();
-                rotateStick();
-                rotateStick();
-                StickI.setVisible(true);
-            }
-        });
-        HeroFalling1.play();
-        MovingStick.play();
+            TranslateTransition HeroFalling1 = new TranslateTransition();
+            HeroFalling1.setDuration(Duration.millis(1000));
+            HeroFalling1.setNode(TheHero);
+            HeroFalling1.setByY(-1 * 500);
+            HeroFalling1.setByX(-1 * StickI.getHeight());
 
+            TranslateTransition HeroFalling2 = new TranslateTransition();
+            HeroFalling2.setDuration(Duration.millis(1000));
+            HeroFalling2.setNode(TheHero1);
+            HeroFalling2.setByY(-1 * 500);
+            HeroFalling2.setByX(-1 * StickI.getHeight());
 
-        revive.setOpacity(0);
+            TranslateTransition MovingStick = new TranslateTransition();
+            MovingStick.setDuration(Duration.millis(1000));
+            MovingStick.setNode(StickI);
+            MovingStick.setByX(-1 * StickI.getHeight());
+            MovingStick.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    StickI.setHeight(Original_heightofStick);
+                    rotateStick();
+                    rotateStick();
+                    rotateStick();
+                    StickI.setVisible(true);
+                }
+            });
+            HeroFalling1.play();
+            MovingStick.play();
+            HeroFalling1.play();
 
+            revive.setOpacity(0);
+        }
+        else {
+            flag1 = 0;
+            StickI.setVisible(false);
+            TheHero.setVisible(true);
+            TheHero1.setVisible(false);
 
+            TranslateTransition HeroFalling1 = new TranslateTransition();
+            HeroFalling1.setDuration(Duration.millis(1000));
+            HeroFalling1.setNode(TheHero);
+            HeroFalling1.setByY(-1 * 500);
+            HeroFalling1.setByX(-1 * StickI.getHeight());
 
-// Set the coordinates of TheHero back to their initial values
-//        TheHero.setLayoutX(45.0);
-//        TheHero.setLayoutY(199.0);
-//        System.out.println("we have set the coordinates");
-//
-//        // Create a TranslateTransition for falling
-//        TranslateTransition HeroFalling1 = new TranslateTransition();
-//        HeroFalling1.setDuration(Duration.millis(1000));
-//        HeroFalling1.setNode(TheHero);
-//        HeroFalling1.setByY(199);
-//        HeroFalling1.setByX(45);
-//        HeroFalling1.play();
+            TranslateTransition HeroFalling2 = new TranslateTransition();
+            HeroFalling2.setDuration(Duration.millis(1000));
+            HeroFalling2.setNode(TheHero1);
+            HeroFalling2.setByY(-1 * 500);
+            HeroFalling2.setByX(-1 * StickI.getHeight());
 
+            TranslateTransition MovingStick = new TranslateTransition();
+            MovingStick.setDuration(Duration.millis(1000));
+            MovingStick.setNode(StickI);
+            MovingStick.setByX(-1 * StickI.getHeight());
+            MovingStick.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    StickI.setHeight(Original_heightofStick);
+                    rotateStick();
+                    rotateStick();
+                    rotateStick();
+                    rotateStick();
+                    StickI.setVisible(true);
+                }
+            });
+            HeroFalling1.play();
+            MovingStick.play();
+            HeroFalling2.play();
 
-
-//
-//        SwitchToScoreCard1();
-//        System.out.println("changing  the scoreboard");
-
+            revive.setOpacity(0);
+        }
+        Status = 0;
+        cnt = 0;
+        val = 0;
+        dis = 0;
+        FlipCount =0 ;
     }
-
 
 
 
@@ -396,9 +431,7 @@ public class Controller implements Initializable{
             if(StickI.getHeight() < Pillar_1.getDistance() - 20) {
                 HeroFalls();
                 System.out.println("called Revival");
-//                tryToRevive();
-
-
+    //tryToRevive();
                 // Set Best score accordingly
                 // Here after this, Switch scene to the revival or scorecard screen...
             }
@@ -572,8 +605,6 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
 //        the image attached to pillar1
         Pillar1.setImage(delta);
 
-
-
     }
     public void setGamma(){
 //        this sets another image
@@ -663,6 +694,10 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
                 HeroFalling.setDuration(Duration.millis(1000));
                 HeroFalling.setNode(TheHero);
                 HeroFalling.setByY(500);
+                TranslateTransition HeroFalling1 = new TranslateTransition();
+                HeroFalling1.setDuration(Duration.millis(1000));
+                HeroFalling1.setNode(TheHero1);
+                HeroFalling1.setByY(500);
                 HeroFalling.setOnFinished(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
@@ -671,12 +706,7 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
                                 // Error is here showing this.scene is null
 //                                callRevival();
                                 saveProgress();
-
                                 revive.setOpacity(1);
-
-
-
-
                             }
                             else {
                                 saveProgress();
@@ -699,7 +729,7 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
     @FXML
     private Button Press;
 
-    int FlipCount = 0, Status = 0, val = 0, dis = 0, cnt = 0;
+
 
     @FXML
     public void Flip() {
@@ -722,18 +752,27 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
                     HeroFalling.setByY(500);
 
                     TranslateTransition HeroFalling1 = new TranslateTransition();
-                    HeroFalling.setDuration(Duration.millis(1000));
-                    HeroFalling.setNode(TheHero1);
-                    HeroFalling.setByY(500);
+                    HeroFalling1.setDuration(Duration.millis(1000));
+                    HeroFalling1.setNode(TheHero1);
+                    HeroFalling1.setByY(500);
+
+
                     HeroFalling.setOnFinished(new EventHandler<ActionEvent>() {
 
                         @Override
                         public void handle(ActionEvent actionEvent) {
                             try {
                                 if(tryToRevive() > 0) {
+                                    // Error is here showing this.scene is null
+//                                callRevival();
+                                    TheHero.setVisible(false);
+                                    TheHero1.setVisible(true);
+                                    saveProgress();
+                                    flag1 = 1;
                                     revive.setOpacity(1);
                                 }
                                 else {
+                                    saveProgress();
                                     SwitchToScoreCard();
                                 }
                             } catch (IOException e) {
@@ -743,6 +782,7 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
                         }
                     });
                     HeroFalling.play();
+                    HeroFalling1.play();
                     cnt++;
                 }
                 if(val != FlipCount) {
