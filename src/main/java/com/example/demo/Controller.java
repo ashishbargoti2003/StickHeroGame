@@ -221,7 +221,7 @@ public class Controller implements Initializable{
     public void switchToPlayground(ActionEvent event) throws IOException {
 //        playAgain.setOpacity(0);
 
-        //music();
+        music();
 
         root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -475,10 +475,15 @@ public class Controller implements Initializable{
         }
     }
 
+    public void resetOpacity(){
+        playAgain.setOpacity(1);
+
+    }
+
     MediaPlayer mediaPlayer;
 
     public void music() {
-        String s = "C:\\Users\\91828\\Downloads\\newProject\\StickHeroGame\\src\\main\\music\\neon-gaming-128925.mp3";
+        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
         Media h = new Media(Paths.get(s).toUri().toString());
         mediaPlayer = new MediaPlayer(h);
         mediaPlayer.play();

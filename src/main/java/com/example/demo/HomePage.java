@@ -8,9 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class HomePage extends Application implements HomePageInterface{
@@ -42,11 +45,21 @@ public class HomePage extends Application implements HomePageInterface{
 
     @FXML
     public void switchToPlayground(ActionEvent event) throws IOException {
+        music();
         root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
         stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    MediaPlayer mediaPlayer;
+
+    public void music() {
+        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
+
     }
 
     @FXML

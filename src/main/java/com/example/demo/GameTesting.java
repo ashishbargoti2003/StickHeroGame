@@ -67,6 +67,13 @@ public class GameTesting {
 
     }
 
+    @Test(timeout = 100)
+    public void checkScoreTime(){
+        Player player=new Player();
+        player.setScore(100);
+        assertEquals(10,player.getHighestScore());
+    }
+
 
 
 
