@@ -605,12 +605,19 @@ public class Controller implements Initializable{
     MediaPlayer mediaPlayer;
 
     public void music() {
-        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
-        Media h = new Media(Paths.get(s).toUri().toString());
-        mediaPlayer = new MediaPlayer(h);
+        String resourcePath = "/com/example/demo/stranger-things-124008.mp3";
+        String resourceUrl = getClass().getResource(resourcePath).toExternalForm();
+
+        Media media = new Media(resourceUrl);
+        mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+//        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
+//        Media h = new Media(Paths.get(s).toUri().toString());
+//        mediaPlayer = new MediaPlayer(h);
+//        mediaPlayer.play();
 
     }
+
 
     @FXML
     private Button PauseButton; // THis is for the pause button
@@ -723,12 +730,21 @@ public class Controller implements Initializable{
     private ImageView Pillar1;
 //    opening two different versions of the images
 
-//    D:\college\gitProject\StickHeroGame\src\main\resources\com\example\demo\delta.png
-    @FXML
-Image delta = new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
-//    Image delta = new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
-    @FXML
-Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
+////    D:\college\gitProject\StickHeroGame\src\main\resources\com\example\demo\delta.png
+
+
+    InputStream inputStream = getClass().getResourceAsStream("/com/example/demo/images/delta.png");
+    Image delta = new Image(inputStream);
+    InputStream inputStream2 = getClass().getResourceAsStream("/com/example/demo/images/gamma.png");
+    Image gamma = new Image(inputStream2);
+
+
+
+//    @FXML
+//Image delta = new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
+////    Image delta = new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
+//    @FXML
+//Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
 //Image gamma=new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
 
 

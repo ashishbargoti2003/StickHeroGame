@@ -90,10 +90,16 @@ public class HomePage extends Application implements HomePageInterface{
     MediaPlayer mediaPlayer;
 
     public void music() {
-        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
-        Media h = new Media(Paths.get(s).toUri().toString());
-        mediaPlayer = new MediaPlayer(h);
+        String resourcePath = "/com/example/demo/stranger-things-124008.mp3";
+        String resourceUrl = getClass().getResource(resourcePath).toExternalForm();
+
+        Media media = new Media(resourceUrl);
+        mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+//        String s = "D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\stranger-things-124008.mp3";
+//        Media h = new Media(Paths.get(s).toUri().toString());
+//        mediaPlayer = new MediaPlayer(h);
+//        mediaPlayer.play();
 
     }
 
