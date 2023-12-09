@@ -126,7 +126,6 @@ public class Controller implements Initializable{
     @FXML
     public void callRevival() throws IOException {
         //music();
-
         root= FXMLLoader.load(this.getClass().getResource("game1.fxml"));
 //        stage = (Stage) ((javafx.scene.Node) getSource()).getScene().getWindow();
         stage = (Stage) scene.getWindow();
@@ -152,9 +151,6 @@ public class Controller implements Initializable{
     @FXML
     public void SwitchToScoreCard() throws IOException {
 
-
-
-
         Parent menu_parent = FXMLLoader.load(getClass().getResource("scorecard.fxml"));
         Scene SceneMenu = new Scene(menu_parent);
 
@@ -163,20 +159,24 @@ public class Controller implements Initializable{
         stage.show();
 
     }
-    public void tryToRevive() throws IOException {
+    public int tryToRevive() throws IOException {
 
         if(cherryCountInt>0){
             cherryCountInt--;
             System.out.println("Revival successful!!");
             updateCherries();
+<<<<<<< HEAD
             callRevival();
+=======
+            return 1;
+            //callRevival();
+>>>>>>> 1ed493c05e3fb537b676245e05da34415db69973
         }
         else {
             System.out.println("cherries are zero;cant revive");
         }
+        return 0;
     }
-
-
 
 
 
@@ -239,7 +239,7 @@ public class Controller implements Initializable{
             if(StickI.getHeight() < Pillar_1.getDistance() - 20) {
                 HeroFalls();
                 System.out.println("called Revival");
-                tryToRevive();
+
                 // Set Best score accordingly
                 // Here after this, Switch scene to the revival or scorecard screen...
             }
@@ -483,7 +483,6 @@ public class Controller implements Initializable{
     }
 
     int Counter = 0;
-
     @FXML
     private void HeroFalls() {
         // This function is for moving the hero uptil the end of stick
@@ -502,18 +501,20 @@ public class Controller implements Initializable{
                 HeroFalling.setNode(TheHero);
                 HeroFalling.setByY(500);
                 HeroFalling.setOnFinished(new EventHandler<ActionEvent>() {
-
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         try {
-//                            updateScore();
-                            SwitchToScoreCard();
+                            if(tryToRevive() > 0) {
+                                // Error is here showing this.scene is null
+                                callRevival();
+                            }
+                            else {
+                                SwitchToScoreCard();
+                            }
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
-
-
                 });
                 HeroFalling.play();
             }
@@ -553,29 +554,41 @@ public class Controller implements Initializable{
                         @Override
                         public void handle(ActionEvent actionEvent) {
                             try {
-//                            updateScore();
-                                SwitchToScoreCard();
+                                if(tryToRevive() > 0) {
+                                    callRevival();
+                                }
+                                else {
+                                    SwitchToScoreCard();
+                                }
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+
                         }
-
-
                     });
                     HeroFalling.play();
                     cnt++;
                 }
                 if(val != FlipCount) {
-                    TheHero.setVisible(false);
-                    TheHero1.setVisible(true);
-                }
-                else {
-                    if(Status == 0 && Math.abs(Cherry.getLayoutX() - new_val.intValue()) <= Cherry.getFitWidth()) {
+                    if(Status == 0 && ((Cherry.getLayoutX() - new_val.intValue()) <= (Cherry.getFitWidth())) && (Cherry.getLayoutX() >= new_val.intValue())) {
                         Status = 1;
                         Cherry.setVisible(false);
                         cherryCountInt++;
                         updateCherries();
-
+                        TheHero1.setVisible(true);
+                        TheHero.setVisible(false);
+                    }
+                    else {
+                        TheHero1.setVisible(true);
+                        TheHero.setVisible(false);
+                    }
+                }
+                else {
+                    if(Status == 0 && ((Cherry.getLayoutX() - new_val.intValue()) <= (Cherry.getFitWidth())) && (Cherry.getLayoutX() >= new_val.intValue())) {
+                        Status = 1;
+                        Cherry.setVisible(false);
+                        cherryCountInt++;
+                        updateCherries();
                     }
                 }
             }
@@ -585,7 +598,6 @@ public class Controller implements Initializable{
                     TheHero.setVisible(true);
                 }
             }
-//            System.out.println(new_val + " " + FlipCount + " " + Cherry.getLayoutX());
             val = FlipCount;
         });
     }
@@ -601,14 +613,14 @@ public class Controller implements Initializable{
         // Create a Timeline for the animation
         Timeline timeline1 = new Timeline();
         // First KeyFrame: move the ImageView to halfDistance over half the total time
-        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero.translateXProperty(), halfDistance));
+        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(10000), new KeyValue(TheHero.translateXProperty(), halfDistance));
         timeline1.getKeyFrames().add(keyFrame1);
 
 
 
         Timeline Hero1 = new Timeline();
         // First KeyFrame: move the ImageView to halfDistance over half the total time
-        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
+        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(10000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
         Hero1.getKeyFrames().add(keyFrameHero1);
 
         Hero1.play();
@@ -616,12 +628,12 @@ public class Controller implements Initializable{
 
         Timeline timeline2 = new Timeline();
         // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
-        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero.translateXProperty(), totalDistance));
+        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(10000), new KeyValue(TheHero.translateXProperty(), totalDistance));
         timeline2.getKeyFrames().add(keyFrame2);
 
         Timeline hero2 = new Timeline();
         // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
-        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
+        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(10000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
         hero2.getKeyFrames().add(keyFramehero2);
 // Set an event handler for when the first KeyFrame is finished (i.e., when the ImageView has reached half its distance)
         timeline2.setOnFinished(event ->
