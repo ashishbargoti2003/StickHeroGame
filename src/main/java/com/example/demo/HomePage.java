@@ -110,6 +110,11 @@ public class HomePage extends Application implements HomePageInterface{
 
     @Override
     public void exit() {}
+    @FXML
+    public void closeWindow(ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 
     public static void main(String[] args) {
         launch(args);

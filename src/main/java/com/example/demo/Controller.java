@@ -85,7 +85,7 @@ public class Controller implements Initializable{
     private Text cherryCount;
 //    to display in scene
 
-    private int cherryCountInt=1;
+    private int cherryCountInt=0;
 //    stores cherries
 
 
@@ -938,6 +938,7 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
     }
 
 
+
     @FXML
     private void handleButtonAction() {
 
@@ -948,14 +949,14 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
         // Create a Timeline for the animation
         Timeline timeline1 = new Timeline();
         // First KeyFrame: move the ImageView to halfDistance over half the total time
-        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero.translateXProperty(), halfDistance));
+        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero.translateXProperty(), halfDistance));
         timeline1.getKeyFrames().add(keyFrame1);
 
 
 
         Timeline Hero1 = new Timeline();
         // First KeyFrame: move the ImageView to halfDistance over half the total time
-        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
+        KeyFrame keyFrameHero1 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero1.translateXProperty(), halfDistance));
         Hero1.getKeyFrames().add(keyFrameHero1);
 
         Hero1.play();
@@ -963,12 +964,12 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
 
         Timeline timeline2 = new Timeline();
         // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
-        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero.translateXProperty(), totalDistance));
+        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero.translateXProperty(), totalDistance));
         timeline2.getKeyFrames().add(keyFrame2);
 
         Timeline hero2 = new Timeline();
         // Second KeyFrame: move the ImageView from halfDistance to totalDistance over the remaining time
-        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(5000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
+        KeyFrame keyFramehero2 = new KeyFrame(Duration.millis(1000), new KeyValue(TheHero1.translateXProperty(), totalDistance));
         hero2.getKeyFrames().add(keyFramehero2);
 // Set an event handler for when the first KeyFrame is finished (i.e., when the ImageView has reached half its distance)
         timeline2.setOnFinished(event ->
