@@ -4,6 +4,7 @@ module com.example.demo {
     requires javafx.graphics;
     requires java.xml;
     requires javafx.media;
+    requires junit;
     opens com.example.demo;
 //    requires javafx.controls;
 //    requires javafx.fxml;

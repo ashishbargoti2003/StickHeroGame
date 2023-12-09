@@ -438,7 +438,11 @@ public class Controller implements Initializable{
         InitializePillars();
         TheHero1.setVisible(false);
         TheHero1.setOpacity(1);
-        Cherry.setOpacity(1);
+
+        if(RandomFunc() == 1) {
+            Cherry.setOpacity(0);
+        }
+        else Cherry.setOpacity(1);
 
         if (elongateTimeline != null) {
             elongateTimeline.stop();
@@ -593,11 +597,11 @@ public class Controller implements Initializable{
 
 //    D:\college\gitProject\StickHeroGame\src\main\resources\com\example\demo\delta.png
     @FXML
-Image delta = new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
-//    Image delta = new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
+//Image delta = new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
+    Image delta = new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
     @FXML
-Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
-//Image gamma=new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
+//Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
+Image gamma=new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
 
 
 
@@ -616,8 +620,16 @@ Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main
         }
 
         return ret;
+    }
+
+    public int RandomFunc() {
+            Random random=new Random();
+            int ret=random.nextInt(3);
+
+            return ret;
 
     }
+
     public void setDelta(){
 //        depending on the random values this changes
 //        the image attached to pillar1
