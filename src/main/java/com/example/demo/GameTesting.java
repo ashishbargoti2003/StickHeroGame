@@ -5,6 +5,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
 public class GameTesting {
+<<<<<<< Updated upstream
     public static void main(String[] args) {
         Result result=
                 JUnitCore.runClasses(GameTest.class);
@@ -13,4 +14,9 @@ public class GameTesting {
         }
         System.out.println(result.wasSuccessful());
     }
+=======
+
+
+
+>>>>>>> Stashed changes
 }
