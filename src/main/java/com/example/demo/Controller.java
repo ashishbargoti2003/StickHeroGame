@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -291,12 +292,47 @@ public class Controller implements Initializable{
         dis = 0;
         FlipCount =0 ;
     }
+    @FXML
+    public void closeWindow(ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 
 
 
     public void setPlayAgainOpacity(){
 
         playAgain.setOpacity(0);
+    }
+    @FXML
+    public void switchToPause(ActionEvent event) throws IOException {
+        Parent secondSceneRoot = FXMLLoader.load(getClass().getResource("pause.fxml"));
+
+        // Create a new stage for the second scene
+        Stage secondStage = new Stage();
+        secondStage.setTitle("pause");
+        secondStage.initModality(Modality.APPLICATION_MODAL); // This makes the second stage modal
+
+        // Set the scene for the second stage
+        Scene secondScene = new Scene(secondSceneRoot);
+        secondStage.setScene(secondScene);
+
+        // Show the second stage
+        secondStage.show();
+
+
+//        playAgain.setOpacity(0);
+
+//        music();
+
+//        root= FXMLLoader.load(this.getClass().getResource("pause.fxml"));
+//        stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+//
+//        scene= new Scene(root);
+//        stage.setScene(scene);
+////        playAgain.setOpacity(0);
+//        stage.show();
+
     }
 
 
@@ -342,6 +378,8 @@ public class Controller implements Initializable{
         scoreInt.setText(scoreTotext);
 
     }
+
+
     @FXML
     public void SwitchToScoreCard() throws IOException {
         playAgain.setOpacity(1);
