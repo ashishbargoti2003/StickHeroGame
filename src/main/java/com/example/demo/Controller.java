@@ -114,12 +114,33 @@ public class Controller implements Initializable{
 
     @FXML
     public void reviveButton() throws IOException {
+        StickI.setVisible(false);
         TranslateTransition HeroFalling1 = new TranslateTransition();
         HeroFalling1.setDuration(Duration.millis(1000));
         HeroFalling1.setNode(TheHero);
         HeroFalling1.setByY(-1 * 500);
         HeroFalling1.setByX(-1 * StickI.getHeight());
+
+        TranslateTransition MovingStick = new TranslateTransition();
+        MovingStick.setDuration(Duration.millis(1000));
+        MovingStick.setNode(StickI);
+        MovingStick.setByX(-1 * StickI.getHeight());
+        MovingStick.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                StickI.setHeight(Original_heightofStick);
+                rotateStick();
+                rotateStick();
+                rotateStick();
+                StickI.setVisible(true);
+            }
+        });
         HeroFalling1.play();
+        MovingStick.play();
+
+
+        revive.setOpacity(0);
+
 
 
 // Set the coordinates of TheHero back to their initial values
@@ -142,7 +163,6 @@ public class Controller implements Initializable{
 //        System.out.println("changing  the scoreboard");
 
     }
-
 
 
 
@@ -491,9 +511,9 @@ public class Controller implements Initializable{
 //    opening two different versions of the images
 
     @FXML
-    Image delta = new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
+    Image delta = new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\delta.png");
     @FXML
-    Image gamma=new Image("file:///D:\\college\\gitProject\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
+    Image gamma=new Image("file:///C:\\Users\\91828\\Downloads\\HeroGame\\StickHeroGame\\src\\main\\resources\\com\\example\\demo\\gamma.png");
 
 
 
@@ -665,6 +685,11 @@ public class Controller implements Initializable{
                 if(Math.abs(dis - new_val.intValue()) <= Pillar1.getFitWidth() && cnt == 0) {
                     TranslateTransition HeroFalling = new TranslateTransition();
                     HeroFalling.setDuration(Duration.millis(1000));
+                    HeroFalling.setNode(TheHero);
+                    HeroFalling.setByY(500);
+
+                    TranslateTransition HeroFalling1 = new TranslateTransition();
+                    HeroFalling.setDuration(Duration.millis(1000));
                     HeroFalling.setNode(TheHero1);
                     HeroFalling.setByY(500);
                     HeroFalling.setOnFinished(new EventHandler<ActionEvent>() {
@@ -673,7 +698,7 @@ public class Controller implements Initializable{
                         public void handle(ActionEvent actionEvent) {
                             try {
                                 if(tryToRevive() > 0) {
-                                    callRevival();
+                                    revive.setOpacity(1);
                                 }
                                 else {
                                     SwitchToScoreCard();
