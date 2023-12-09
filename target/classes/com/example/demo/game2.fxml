@@ -9,21 +9,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#elongateStick" onMouseReleased="#stopElongation" prefHeight="374.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#elongateStick" onMouseReleased="#stopElongation" prefHeight="495.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller">
    <children>
-      <ImageView fitHeight="375.0" fitWidth="535.0" layoutX="-10.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="504.0" fitWidth="495.0" layoutX="-6.0" pickOnBounds="true">
          <image>
             <Image url="@back4.png" />
          </image>
       </ImageView>
-      <Rectangle fx:id="StickI" arcHeight="5.0" arcWidth="5.0" fill="#000c16" height="15.0" layoutX="78.0" layoutY="217.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
+      <Rectangle fx:id="StickI" arcHeight="5.0" arcWidth="5.0" fill="#000c16" height="15.0" layoutX="66.0" layoutY="351.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
       <Button fx:id="PauseButton" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" onAction="#Pause" prefHeight="39.0" prefWidth="61.0" text="Pause" />
-      <ImageView fx:id="TheHero" fitHeight="39.0" fitWidth="34.0" layoutX="45.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="TheHero" fitHeight="39.0" fitWidth="34.0" layoutX="33.0" layoutY="333.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/hero.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="Pillar1" fitHeight="139.0" fitWidth="69.0" layoutX="43.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Pillar1" fitHeight="139.0" fitWidth="69.0" layoutX="31.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/beta.png" />
          </image>
@@ -33,7 +33,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <ImageView fx:id="Pillar2" fitHeight="139.0" fitWidth="69.0" layoutX="348.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Pillar2" fitHeight="139.0" fitWidth="69.0" layoutX="348.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/beta.png" />
          </image>
@@ -48,7 +48,7 @@
             <Image url="@images/hero.png" />
          </image>
       </ImageView>
-      <Button fx:id="Press" layoutX="205.0" layoutY="284.0" mnemonicParsing="false" onAction="#Flip" opacity="0.58" prefHeight="68.0" prefWidth="70.0" style="-fx-background-radius: 1000;" text="Flip">
+      <Button fx:id="Press" layoutX="190.0" layoutY="421.0" mnemonicParsing="false" onAction="#Flip" opacity="0.58" prefHeight="68.0" prefWidth="70.0" style="-fx-background-radius: 1000;" text="Flip">
          <font>
             <Font size="22.0" />
          </font>
@@ -70,7 +70,7 @@
       </Text>
       <Button layoutX="313.0" layoutY="20.0" mnemonicParsing="false" onAction="#saveButton" prefHeight="24.0" prefWidth="70.0" text="Save " />
       <Button fx:id="revive" layoutX="416.0" layoutY="154.0" mnemonicParsing="false" onAction="#reviveButton" opacity="0.0" text="Revive" />
-      <ImageView fitHeight="19.0" fitWidth="38.0" layoutX="110.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="51.0" fitWidth="38.0" layoutX="102.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@fruit.png" />
          </image>

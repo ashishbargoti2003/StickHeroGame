@@ -13,28 +13,26 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Random;
 import java.util.ResourceBundle;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-//import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Node;
-
-import static java.lang.Thread.sleep;
 
 
 /*
@@ -62,7 +60,7 @@ import static java.lang.Thread.sleep;
 *Score is not updated and not stored best score also
 *
  */
-public class Controller implements Initializable{
+public class Controller2 implements Initializable{
 
     private Player player=new Player();
     @FXML
@@ -305,27 +303,6 @@ public class Controller implements Initializable{
                 out.close();
             }
         }
-
-    }
-    public void deserializePlayer() throws IOException {
-        ObjectInputStream out=null;
-        try{
-            out=new ObjectInputStream(new FileInputStream("PlayerProgress.txt"));
-            if (player==null){
-                player=(Player) out.readObject();
-
-            }
-
-
-        } catch (ClassNotFoundException | IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if(out!=null){
-                out.close();
-                updateScoreboard();
-            }
-        }
-
 
     }
 
